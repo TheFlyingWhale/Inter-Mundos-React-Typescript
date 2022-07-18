@@ -1,4 +1,12 @@
-type TileType = "plains" | "jungle" | "forest" | "mountain" | "desert" | "base";
+type TileType =
+    | "plains"
+    | "jungle"
+    | "forest"
+    | "mountain"
+    | "desert"
+    | "lake"
+    | "river"
+    | "base";
 
 export class Tile {
     public name: string = "tile name";
@@ -19,7 +27,7 @@ export class Tile {
     }
 
     setRandomType() {
-        const random = Math.floor(Math.random() * 4);
+        const random = Math.floor(Math.random() * 7);
         switch (random) {
             case 0:
                 this.type = "plains";
@@ -33,8 +41,17 @@ export class Tile {
             case 3:
                 this.type = "mountain";
                 break;
-            default:
+            case 4:
                 this.type = "desert";
+                break;
+            case 5:
+                this.type = "lake";
+                break;
+            case 6:
+                this.type = "river";
+                break;
+            default:
+                this.type = "plains";
                 break;
         }
     }

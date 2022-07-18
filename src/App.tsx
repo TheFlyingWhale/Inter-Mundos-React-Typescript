@@ -1,9 +1,11 @@
-import { Heading, VStack, Button, HStack, Text } from "@chakra-ui/react";
+import { Heading, VStack, HStack, Text } from "@chakra-ui/react";
 import { useGameContext } from "./context/GameContext";
 import { TilePanel } from "./components/tilePanel";
+import { PlayerPanel } from "./components/playerPanel";
+import { DeveloperControlPanel } from "./components/developerControlPanel";
 
 function App() {
-    const { gameState, gameCommands } = useGameContext();
+    const { gameState } = useGameContext();
 
     return (
         <VStack
@@ -21,6 +23,10 @@ function App() {
                 <Text>
                     <b>Game round:</b> {gameState.round}
                 </Text>
+                <Text>
+                    <b>Game over:</b>{" "}
+                    {!gameState.gameOver ? "Game" : "Game Over"}
+                </Text>
             </HStack>
 
             <VStack bg="gray.500" p={12} borderRadius={12} color="white">
@@ -32,10 +38,7 @@ function App() {
                         </Text>
                     </VStack>
                     <VStack bg="gray.700" p={6} borderRadius={6}>
-                        <Heading size="md">Player Information</Heading>
-                        <Text>
-                            <b>Player Index:</b> {gameState.playerIndex}{" "}
-                        </Text>
+                        <PlayerPanel />
                     </VStack>
                     <VStack bg="gray.700" p={6} borderRadius={6}>
                         <TilePanel />
@@ -43,34 +46,7 @@ function App() {
                 </HStack>
             </VStack>
 
-            <HStack bg="gray.300" p={6} borderRadius={6}>
-                <Button colorScheme="blue" onClick={gameCommands.advanceRound}>
-                    advance round
-                </Button>
-                <Button
-                    colorScheme="blue"
-                    onClick={() => console.log(gameState)}
-                >
-                    log state
-                </Button>
-                <Button
-                    colorScheme="blue"
-                    onClick={gameCommands.initializeWorld}
-                >
-                    initializeWorld
-                </Button>
-                <Button colorScheme="blue" onClick={gameCommands.startGame}>
-                    Start Game
-                </Button>
-            </HStack>
-            <HStack bg="gray.300" p={6} borderRadius={6}>
-                <Button colorScheme="green" onClick={gameCommands.goBackward}>
-                    goBackwards
-                </Button>
-                <Button colorScheme="green" onClick={gameCommands.goForward}>
-                    goForward
-                </Button>
-            </HStack>
+            <DeveloperControlPanel />
         </VStack>
     );
 }

@@ -18,7 +18,7 @@ const TileIndexItem = () => {
         return (
             <Text>
                 <b>Tile Index:</b>{" "}
-                {gameState.world.map[gameState.playerIndex].index}{" "}
+                {gameState.world.map[gameState.player.index].index}{" "}
             </Text>
         );
     }
@@ -33,7 +33,7 @@ const TileTypeItem = () => {
         return (
             <Text>
                 <b>Tile Type:</b>{" "}
-                {gameState.world.map[gameState.playerIndex].type}{" "}
+                {gameState.world.map[gameState.player.index].type}{" "}
             </Text>
         );
     }
