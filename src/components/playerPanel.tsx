@@ -1,16 +1,18 @@
-import { Heading, Text } from "@chakra-ui/react";
+import { VStack, Heading, Text } from "@chakra-ui/react";
 import { useGameContext } from "../context/GameContext";
 
 export const PlayerPanel = () => {
     return (
-        <>
+        <VStack bg="gray.700" p={6} borderRadius={6}>
             <Heading size="md">Player Information</Heading>
             <PlayerNameItem />
             <PlayerIndexItem />
             <PlayerHealthItem />
             <PlayerThirstItem />
             <PlayerHungerItem />
-        </>
+            <PlayerAttackPowerItem />
+            <PlayerCriticalChanceItem />
+        </VStack>
     );
 };
 
@@ -77,6 +79,34 @@ const PlayerHungerItem = () => {
         return (
             <Text>
                 <b>Hunger:</b> {gameState.player.hunger}{" "}
+            </Text>
+        );
+    }
+
+    return <></>;
+};
+
+const PlayerAttackPowerItem = () => {
+    const { gameState } = useGameContext();
+
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Attack Power:</b> {gameState.player.attackPower}{" "}
+            </Text>
+        );
+    }
+
+    return <></>;
+};
+
+const PlayerCriticalChanceItem = () => {
+    const { gameState } = useGameContext();
+
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Critical Chance:</b> {gameState.player.critChance}{" "}
             </Text>
         );
     }

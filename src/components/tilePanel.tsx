@@ -1,13 +1,13 @@
 import { useGameContext } from "../context/GameContext";
-import { Heading, Text } from "@chakra-ui/react";
+import { VStack, Heading, Text } from "@chakra-ui/react";
 
 export const TilePanel = () => {
     return (
-        <>
+        <VStack bg="gray.700" p={6} borderRadius={6}>
             <Heading size="md">Tile Information</Heading>
             <TileIndexItem />
             <TileTypeItem />
-        </>
+        </VStack>
     );
 };
 

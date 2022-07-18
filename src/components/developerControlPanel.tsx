@@ -4,12 +4,13 @@ import { useGameContext } from "../context/GameContext";
 export const DeveloperControlPanel = () => {
     return (
         <>
-            <VStack bg="gray.300" p={6} borderRadius={6} alignItems="start">
+            <VStack bg="gray.300" p={6} borderRadius={12} alignItems="start">
                 <Heading color="gray.600" size="lg">
                     Developer Controls
                 </Heading>
                 <GameControls />
                 <PlayerControls />
+                <EnemyControls />
             </VStack>
         </>
     );
@@ -117,6 +118,32 @@ const PlayerControls = () => {
                     goForward
                 </Button>
             </Grid>
+        </VStack>
+    );
+};
+
+const EnemyControls = () => {
+    const { gameCommands } = useGameContext();
+
+    return (
+        <VStack p={6} borderRadius={6} bg="red.100" alignItems="start">
+            <Heading size="md" color="red.700">
+                Enemy Controls
+            </Heading>
+            <HStack>
+                <Button
+                    colorScheme="red"
+                    onClick={() => gameCommands.generateRandomEnemy()}
+                >
+                    createRandomEnemy
+                </Button>
+                <Button
+                    colorScheme="red"
+                    onClick={() => gameCommands.setEnemyPlaceHolder()}
+                >
+                    removeEnemy
+                </Button>
+            </HStack>
         </VStack>
     );
 };

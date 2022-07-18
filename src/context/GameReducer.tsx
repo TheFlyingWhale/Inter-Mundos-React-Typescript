@@ -1,6 +1,7 @@
 import { GameStateInterface } from "./GameContext";
 import { World } from "../classes/World";
 import { Player } from "../classes/Player";
+import { Enemy } from "../classes/Enemy";
 
 export enum Action {
     // Game
@@ -9,6 +10,7 @@ export enum Action {
     ADVANCE_ROUND,
     // World
     SET_WORLD,
+    SET_WORLD_NAME,
     //Player
     SET_PLAYER,
     SET_PLAYER_INDEX,
@@ -24,6 +26,9 @@ export enum Action {
     DECREASE_PLAYER_HUNGER,
     GO_FORWARD,
     GO_BACKWARD,
+    // Enemy
+    SET_ENEMY,
+    SET_ENEMY_HEALTH,
 }
 
 export type GameAction =
@@ -33,6 +38,7 @@ export type GameAction =
     | { type: Action.ADVANCE_ROUND }
     // World
     | { type: Action.SET_WORLD; world: World }
+    | { type: Action.SET_WORLD_NAME; name: string }
     // Player
     | { type: Action.SET_PLAYER; player: Player }
     | { type: Action.SET_PLAYER_INDEX; index: number }
@@ -47,11 +53,14 @@ export type GameAction =
     | { type: Action.INCREASE_PLAYER_HUNGER; amount: number }
     | { type: Action.DECREASE_PLAYER_HUNGER; amount: number }
     | { type: Action.GO_FORWARD }
-    | { type: Action.GO_BACKWARD };
+    | { type: Action.GO_BACKWARD }
+    // ENEMY
+    | { type: Action.SET_ENEMY; enemy: Enemy }
+    | { type: Action.SET_ENEMY_HEALTH; health: number };
 
 export const reducer = (state: GameStateInterface, action: GameAction) => {
     switch (action.type) {
-        // Game
+        // Game ---------------------------------------------------------------------------------------------------------
 
         case Action.TOGGLE_GAME_OVER: {
             return { ...state, gameOver: !state.gameOver };
@@ -71,13 +80,16 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             };
         }
 
-        // World
+        // World ---------------------------------------------------------------------------------------------------------
+
         case Action.SET_WORLD: {
             return {
                 ...state,
                 world: action.world,
             };
         }
+
+        // Player ---------------------------------------------------------------------------------------------------------
 
         case Action.SET_PLAYER: {
             return {
@@ -86,7 +98,6 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             };
         }
 
-        // Player
         case Action.SET_PLAYER_INDEX: {
             return {
                 ...state,
@@ -214,6 +225,15 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
                     ...state.player,
                     index: state.player.index - 1,
                 },
+            };
+        }
+
+        // Enemy ---------------------------------------------------------------------------------------------------------
+
+        case Action.SET_ENEMY: {
+            return {
+                ...state,
+                enemy: action.enemy,
             };
         }
 

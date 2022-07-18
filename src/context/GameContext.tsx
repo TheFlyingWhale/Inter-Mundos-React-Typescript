@@ -10,7 +10,7 @@ export interface GameStateInterface {
     gameOver: boolean;
     player: Player;
     world: World;
-    enemy: Enemy | undefined;
+    enemy: Enemy;
 }
 
 const initialGameState: GameStateInterface = {
@@ -19,7 +19,7 @@ const initialGameState: GameStateInterface = {
     gameOver: false,
     player: new Player("Player 1"),
     world: new World("Placeholder World", 0),
-    enemy: undefined,
+    enemy: new Enemy("placeholder"),
 };
 
 interface GameCommands {
@@ -46,12 +46,15 @@ interface GameCommands {
     goBackward: () => void;
 
     // Enemy
+    setEnemy: (enemy: Enemy) => void;
+    setEnemyPlaceHolder: () => void;
+    generateRandomEnemy: () => void;
 }
 
 export const GameContextProvider = (props: { children: ReactNode }) => {
     const [gameState, dispatch] = React.useReducer(reducer, initialGameState);
 
-    // Game
+    // Game ---------------------------------------------------------------------------------------------------------
 
     const toggleGameOver = () => {
         dispatch({ type: Action.TOGGLE_GAME_OVER });
@@ -69,7 +72,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         setPlayerIndex(5);
     };
 
-    // World
+    // World ---------------------------------------------------------------------------------------------------------
 
     const setWorld = (world: World) => {
         dispatch({ type: Action.SET_WORLD, world });
@@ -81,7 +84,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         setWorld(newWorld);
     };
 
-    // Player
+    // Player ---------------------------------------------------------------------------------------------------------
 
     const setPlayer = (player: Player) => {};
 
@@ -164,6 +167,23 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         }
     };
 
+    // Enemy ---------------------------------------------------------------------------------------------------------
+
+    const setEnemy = (enemy: Enemy) => {
+        dispatch({ type: Action.SET_ENEMY, enemy });
+    };
+
+    const setEnemyPlaceHolder = () => {
+        const enemy = new Enemy("placeholder");
+        setEnemy(enemy);
+    };
+
+    const generateRandomEnemy = () => {
+        const newEnemy = new Enemy("Enemy name");
+        newEnemy.initRandom();
+        setEnemy(newEnemy);
+    };
+
     const gameCommands = {
         // Game
         toggleGameOver,
@@ -186,6 +206,11 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         decreasePlayerHunger,
         goForward,
         goBackward,
+
+        // Enemy
+        setEnemy,
+        setEnemyPlaceHolder,
+        generateRandomEnemy,
     };
 
     return (
@@ -229,6 +254,11 @@ const Context = React.createContext<GameContextInterface>({
         decreasePlayerHunger: () => {},
         goForward: () => {},
         goBackward: () => {},
+
+        // Enemy
+        setEnemy: () => {},
+        setEnemyPlaceHolder: () => {},
+        generateRandomEnemy: () => {},
     },
 });
 

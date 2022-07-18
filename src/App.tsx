@@ -1,7 +1,9 @@
 import { Heading, VStack, HStack, Text } from "@chakra-ui/react";
 import { useGameContext } from "./context/GameContext";
+import { WorldPanel } from "./components/worldPanel";
 import { TilePanel } from "./components/tilePanel";
 import { PlayerPanel } from "./components/playerPanel";
+import { EnemyPanel } from "./components/enemyPanel";
 import { DeveloperControlPanel } from "./components/developerControlPanel";
 
 function App() {
@@ -31,18 +33,10 @@ function App() {
 
             <VStack bg="gray.500" p={12} borderRadius={12} color="white">
                 <HStack>
-                    <VStack bg="gray.700" p={6} borderRadius={6}>
-                        <Heading size="md">World Information</Heading>
-                        <Text>
-                            <b>World Size:</b> {gameState.world.size}{" "}
-                        </Text>
-                    </VStack>
-                    <VStack bg="gray.700" p={6} borderRadius={6}>
-                        <PlayerPanel />
-                    </VStack>
-                    <VStack bg="gray.700" p={6} borderRadius={6}>
-                        <TilePanel />
-                    </VStack>
+                    <WorldPanel />
+                    <PlayerPanel />
+                    <TilePanel />
+                    {gameState.enemy.name !== "placeholder" && <EnemyPanel />}
                 </HStack>
             </VStack>
 
