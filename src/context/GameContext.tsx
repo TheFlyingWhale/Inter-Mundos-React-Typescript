@@ -68,6 +68,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     const goForward = () => {
         if (gameState.playerIndex !== gameState.world.size - 1) {
             dispatch({ type: Action.GO_FORWARD });
+            advanceRound();
         } else {
             console.log("Can't go forward any further!");
         }
@@ -76,6 +77,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     const goBackward = () => {
         if (gameState.playerIndex !== 0) {
             dispatch({ type: Action.GO_BACKWARD });
+            advanceRound();
         } else {
             console.log("You can't go back any further!");
         }
