@@ -98,7 +98,8 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     const decreasePlayerHealth = (amount: number) => {
-        if (gameState.player.health - amount < 0) {
+        if (gameState.player.health - amount <= 0) {
+            toggleGameOver();
             dispatch({ type: Action.SET_PLAYER_HEALTH, health: 0 });
         } else {
             dispatch({ type: Action.DECREASE_PLAYER_HEALTH, amount });
