@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { reducer, Action } from "./GameReducer";
 import { World } from "../classes/World";
 import { Player } from "../classes/Player";
+import { Enemy } from "../classes/Enemy";
 
 export interface GameStateInterface {
     name: string;
@@ -9,6 +10,7 @@ export interface GameStateInterface {
     gameOver: boolean;
     player: Player;
     world: World;
+    enemy: Enemy | undefined;
 }
 
 const initialGameState: GameStateInterface = {
@@ -17,6 +19,7 @@ const initialGameState: GameStateInterface = {
     gameOver: false,
     player: new Player("Player 1"),
     world: new World("Placeholder World", 0),
+    enemy: undefined,
 };
 
 interface GameCommands {
@@ -30,6 +33,7 @@ interface GameCommands {
     initializeWorld: () => void;
 
     // Player
+    setPlayer: (player: Player) => void;
     setPlayerIndex: (index: number) => void;
     setPlayerName: (name: string) => void;
     increasePlayerHealth: (amount: number) => void;
@@ -40,6 +44,8 @@ interface GameCommands {
     decreasePlayerHunger: (amount: number) => void;
     goForward: () => void;
     goBackward: () => void;
+
+    // Enemy
 }
 
 export const GameContextProvider = (props: { children: ReactNode }) => {
@@ -76,6 +82,8 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     // Player
+
+    const setPlayer = (player: Player) => {};
 
     const setPlayerIndex = (index: number) => {
         if (index >= 0 && index < gameState.world.size) {
@@ -167,6 +175,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         initializeWorld,
 
         //Player
+        setPlayer,
         setPlayerIndex,
         setPlayerName,
         increasePlayerHealth,
@@ -209,6 +218,7 @@ const Context = React.createContext<GameContextInterface>({
         initializeWorld: () => {},
 
         //Player
+        setPlayer: () => {},
         setPlayerIndex: () => {},
         setPlayerName: () => {},
         increasePlayerHealth: () => {},

@@ -1,5 +1,6 @@
 import { GameStateInterface } from "./GameContext";
 import { World } from "../classes/World";
+import { Player } from "../classes/Player";
 
 export enum Action {
     // Game
@@ -9,6 +10,7 @@ export enum Action {
     // World
     SET_WORLD,
     //Player
+    SET_PLAYER,
     SET_PLAYER_INDEX,
     SET_PLAYER_NAME,
     SET_PLAYER_HEALTH,
@@ -32,6 +34,7 @@ export type GameAction =
     // World
     | { type: Action.SET_WORLD; world: World }
     // Player
+    | { type: Action.SET_PLAYER; player: Player }
     | { type: Action.SET_PLAYER_INDEX; index: number }
     | { type: Action.SET_PLAYER_NAME; name: string }
     | { type: Action.SET_PLAYER_HEALTH; health: number }
@@ -73,6 +76,13 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             return {
                 ...state,
                 world: action.world,
+            };
+        }
+
+        case Action.SET_PLAYER: {
+            return {
+                ...state,
+                player: action.player,
             };
         }
 
