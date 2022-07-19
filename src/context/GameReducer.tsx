@@ -7,6 +7,7 @@ import { Tile } from "../classes/Tile";
 export enum Action {
     // Game
     TOGGLE_GAME_OVER,
+    SET_GAME_OVER,
     SET_GAME_NAME,
     ADVANCE_ROUND,
     // World
@@ -38,6 +39,7 @@ export enum Action {
 export type GameAction =
     // Game
     | { type: Action.TOGGLE_GAME_OVER }
+    | { type: Action.SET_GAME_OVER; gameOver: boolean }
     | { type: Action.SET_GAME_NAME; name: string }
     | { type: Action.ADVANCE_ROUND }
     // World
@@ -71,6 +73,10 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
 
         case Action.TOGGLE_GAME_OVER: {
             return { ...state, gameOver: !state.gameOver };
+        }
+
+        case Action.SET_GAME_OVER: {
+            return { ...state, gameOver: action.gameOver };
         }
 
         case Action.SET_GAME_NAME: {

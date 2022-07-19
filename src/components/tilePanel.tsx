@@ -3,7 +3,7 @@ import { VStack, Heading, Text } from "@chakra-ui/react";
 
 export const TilePanel = () => {
     return (
-        <VStack bg="gray.700" p={6} borderRadius={6}>
+        <VStack bg="gray.700" p={6} borderRadius={6} alignItems="start">
             <Heading size="md">Tile Information</Heading>
             <TileIndexItem />
             <TileTypeItem />

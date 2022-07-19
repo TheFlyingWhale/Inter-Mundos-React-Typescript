@@ -2,8 +2,15 @@ import { VStack, Heading, Text } from "@chakra-ui/react";
 import { useGameContext } from "../context/GameContext";
 
 export const EnemyPanel = () => {
+    const { gameState } = useGameContext();
+
     return (
-        <VStack bg="gray.700" p={6} borderRadius={6}>
+        <VStack
+            bg={gameState.enemy.health > 0 ? "gray.700" : "red.700"}
+            p={6}
+            borderRadius={6}
+            alignItems="start"
+        >
             <Heading size="md">Enemy Information</Heading>
             <EnemyNameItem />
             <EnemyHealthItem />

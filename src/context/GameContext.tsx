@@ -28,6 +28,7 @@ const initialGameState: GameStateInterface = {
 interface GameCommands {
     // Game
     toggleGameOver: () => void;
+    setGameOver: (gameOver: boolean) => void;
     setGameName: (name: string) => void;
     advanceRound: () => void;
     startGame: () => void;
@@ -40,6 +41,7 @@ interface GameCommands {
     setPlayer: (player: Player) => void;
     setPlayerIndex: (index: number) => void;
     setPlayerName: (name: string) => void;
+    setPlayerHealth: (health: number) => void;
     increasePlayerHealth: (amount: number) => void;
     decreasePlayerHealth: (amount: number) => void;
     increasePlayerThirst: (amount: number) => void;
@@ -67,11 +69,25 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         dispatch({ type: Action.TOGGLE_GAME_OVER });
     };
 
+    const setGameOver = (gameOver: boolean) => {
+        dispatch({ type: Action.SET_GAME_OVER, gameOver });
+    };
+
     const setGameName = (name: string) => {
         dispatch({ type: Action.SET_GAME_NAME, name });
     };
 
     const advanceRound = () => {
+        decreasePlayerHunger(10);
+        if (gameState.player.hunger === 0) {
+            decreasePlayerHealth(5);
+        }
+
+        decreasePlayerThirst(10);
+        if (gameState.player.thirst === 0) {
+            decreasePlayerHealth(5);
+        }
+
         dispatch({ type: Action.ADVANCE_ROUND });
     };
 
@@ -112,6 +128,10 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         dispatch({ type: Action.SET_PLAYER_NAME, name });
     };
 
+    const setPlayerHealth = (health: number) => {
+        dispatch({ type: Action.SET_PLAYER_HEALTH, health });
+    };
+
     const increasePlayerHealth = (amount: number) => {
         if (gameState.player.health + amount > 100) {
             dispatch({ type: Action.SET_PLAYER_HEALTH, health: 100 });
@@ -122,7 +142,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
 
     const decreasePlayerHealth = (amount: number) => {
         if (gameState.player.health - amount <= 0) {
-            toggleGameOver();
+            setGameOver(true);
             dispatch({ type: Action.SET_PLAYER_HEALTH, health: 0 });
         } else {
             dispatch({ type: Action.DECREASE_PLAYER_HEALTH, amount });
@@ -191,7 +211,14 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     const generateRandomEnemy = () => {
-        const newEnemy = new Enemy({ name: "Enemy name" });
+        const attackPower = Math.floor(Math.random() * (10 - 1) + 1);
+        const critChange = Math.floor(Math.random() * (75 - 10) + 10);
+
+        const newEnemy = new Enemy({
+            name: "Enemy name",
+            attackPower: attackPower,
+            critChance: critChange,
+        });
         setEnemy(newEnemy);
     };
 
@@ -218,6 +245,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     const gameCommands = {
         // Game
         toggleGameOver,
+        setGameOver,
         setGameName,
         advanceRound,
         startGame,
@@ -230,6 +258,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         setPlayer,
         setPlayerIndex,
         setPlayerName,
+        setPlayerHealth,
         increasePlayerHealth,
         decreasePlayerHealth,
         increasePlayerThirst,
@@ -270,6 +299,7 @@ const Context = React.createContext<GameContextInterface>({
     gameCommands: {
         //Game
         toggleGameOver: () => {},
+        setGameOver: () => {},
         setGameName: () => {},
         advanceRound: () => {},
         startGame: () => {},
@@ -282,6 +312,7 @@ const Context = React.createContext<GameContextInterface>({
         setPlayer: () => {},
         setPlayerIndex: () => {},
         setPlayerName: () => {},
+        setPlayerHealth: () => {},
         increasePlayerHealth: () => {},
         decreasePlayerHealth: () => {},
         increasePlayerThirst: () => {},

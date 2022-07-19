@@ -5,7 +5,7 @@ export class Player {
     public thirst: number = 100;
     public hunger: number = 100;
     public attackPower: number = 10;
-    public critChance: number = 5;
+    public critChance: number = 75;
 
     constructor(name: string) {
         this.name = name;

@@ -31,7 +31,12 @@ function App() {
                 </Text>
             </HStack>
 
-            <VStack bg="gray.500" p={12} borderRadius={12} color="white">
+            <VStack
+                bg={gameState.gameOver ? "red.500" : "gray.500"}
+                p={12}
+                borderRadius={12}
+                color="white"
+            >
                 <HStack>
                     <WorldPanel />
                     <PlayerPanel />

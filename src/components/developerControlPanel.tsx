@@ -11,6 +11,7 @@ export const DeveloperControlPanel = () => {
                 <GameControls />
                 <PlayerControls />
                 <EnemyControls />
+                <CombatControls />
             </VStack>
         </>
     );
@@ -126,34 +127,95 @@ const EnemyControls = () => {
     const { gameCommands } = useGameContext();
 
     return (
-        <VStack p={6} borderRadius={6} bg="red.100" alignItems="start">
-            <Heading size="md" color="red.700">
+        <VStack p={6} borderRadius={6} bg="orange.100" alignItems="start">
+            <Heading size="md" color="orange.700">
                 Enemy Controls
             </Heading>
             <HStack>
                 <Button
-                    colorScheme="red"
+                    colorScheme="orange"
                     onClick={() => gameCommands.generateRandomEnemy()}
                 >
                     createRandomEnemy
                 </Button>
                 <Button
-                    colorScheme="red"
+                    colorScheme="orange"
                     onClick={() => gameCommands.setEnemyPlaceHolder()}
                 >
                     removeEnemy
                 </Button>
                 <Button
-                    colorScheme="red"
+                    colorScheme="orange"
                     onClick={() => gameCommands.increaseEnemyHealth(10)}
                 >
                     increaseEnemyHealth(10)
                 </Button>
                 <Button
-                    colorScheme="red"
+                    colorScheme="orange"
                     onClick={() => gameCommands.decreaseEnemyHealth(10)}
                 >
                     decreaseEnemyHealth(10)
+                </Button>
+            </HStack>
+        </VStack>
+    );
+};
+
+const CombatControls = () => {
+    const { gameState, gameCommands } = useGameContext();
+    const { player, enemy } = gameState;
+
+    const handleCombat = () => {
+        const willEnemyCrit = Math.random() < enemy.critChance / 100;
+        const willPlayerCrit = Math.random() < player.critChance / 100;
+
+        const enemyDamage = enemy.attackPower;
+        const playerDamage = player.attackPower;
+
+        const calculatedEnemyCrit = Math.floor(
+            (enemy.attackPower / enemy.critChance) * 100
+        );
+
+        const calculatedPlayerCrit = Math.floor(
+            (player.attackPower / player.critChance) * 100
+        );
+
+        const totalEnemyDamage =
+            enemyDamage + (willEnemyCrit ? calculatedEnemyCrit : 0);
+        const totalPlayerDamage =
+            playerDamage + (willPlayerCrit ? calculatedPlayerCrit : 0);
+
+        console.clear();
+        console.log("- Enemy:");
+        console.log("enemyDamage", enemyDamage);
+        console.log("willEnemyCrit", willEnemyCrit);
+        console.log("calculatedEnemyCritDamage", calculatedEnemyCrit);
+        console.log("totalEnemyDamage", totalEnemyDamage);
+
+        console.log("\n- Player");
+        console.log("playerDamage", playerDamage);
+        console.log("willPlayerCrit", willPlayerCrit);
+        console.log("calculatedPlayerDamage", calculatedPlayerCrit);
+        console.log("totalPlayerDamage", totalPlayerDamage);
+
+        gameCommands.decreaseEnemyHealth(totalPlayerDamage);
+        gameCommands.decreasePlayerHealth(totalEnemyDamage);
+    };
+
+    return (
+        <VStack p={6} borderRadius={6} bg="red.100" alignItems="start">
+            <Heading size="md" color="red.700">
+                Combat Controls
+            </Heading>
+            <HStack>
+                <Button colorScheme="red" onClick={handleCombat}>
+                    fight
+                </Button>
+                <Button
+                    colorScheme="red"
+                    onClick={() => gameCommands.setPlayerHealth(100)}
+                >
+                    gods breath
                 </Button>
             </HStack>
         </VStack>
