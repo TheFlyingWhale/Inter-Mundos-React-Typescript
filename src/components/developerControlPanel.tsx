@@ -58,6 +58,11 @@ const GameControls = () => {
 const PlayerControls = () => {
     const { gameCommands } = useGameContext();
 
+    const handleRest = () => {
+        gameCommands.increasePlayerHealth(50);
+        gameCommands.advanceRound();
+    };
+
     return (
         <VStack p={6} borderRadius={6} bg="green.100" alignItems="start">
             <Heading size="md" color="green.700">
@@ -66,51 +71,24 @@ const PlayerControls = () => {
             <Grid templateColumns="repeat(4, 1fr)" gap={6}>
                 <Button
                     colorScheme="green"
-                    onClick={() => gameCommands.setPlayerIndex(0)}
+                    onClick={() => gameCommands.setPlayerIndex(5)}
                 >
-                    setPlayerIndex(2)
+                    teleport home
+                </Button>
+                <Button colorScheme="green" onClick={handleRest}>
+                    rest
                 </Button>
                 <Button
                     colorScheme="green"
-                    onClick={() => gameCommands.setPlayerName("Player 2")}
+                    onClick={() => gameCommands.increasePlayerHunger(25)}
                 >
-                    setPlayerName("Player 2")
+                    eat
                 </Button>
                 <Button
                     colorScheme="green"
-                    onClick={() => gameCommands.increasePlayerHealth(10)}
+                    onClick={() => gameCommands.increasePlayerThirst(25)}
                 >
-                    increasePlayerHealth(10)
-                </Button>
-                <Button
-                    colorScheme="green"
-                    onClick={() => gameCommands.decreasePlayerHealth(10)}
-                >
-                    decreasePlayerHealth(10)
-                </Button>
-                <Button
-                    colorScheme="green"
-                    onClick={() => gameCommands.increasePlayerThirst(10)}
-                >
-                    increasePlayerThirst(10)
-                </Button>
-                <Button
-                    colorScheme="green"
-                    onClick={() => gameCommands.decreasePlayerThirst(10)}
-                >
-                    decreasePlayerThirst(10)
-                </Button>
-                <Button
-                    colorScheme="green"
-                    onClick={() => gameCommands.increasePlayerHunger(10)}
-                >
-                    increasePlayerHunger(10)
-                </Button>
-                <Button
-                    colorScheme="green"
-                    onClick={() => gameCommands.decreasePlayerHunger(10)}
-                >
-                    decreasePlayerHunger(10)
+                    drink
                 </Button>
                 <Button colorScheme="green" onClick={gameCommands.goBackward}>
                     goBackwards
@@ -143,18 +121,6 @@ const EnemyControls = () => {
                     onClick={() => gameCommands.setEnemyPlaceHolder()}
                 >
                     removeEnemy
-                </Button>
-                <Button
-                    colorScheme="orange"
-                    onClick={() => gameCommands.increaseEnemyHealth(10)}
-                >
-                    increaseEnemyHealth(10)
-                </Button>
-                <Button
-                    colorScheme="orange"
-                    onClick={() => gameCommands.decreaseEnemyHealth(10)}
-                >
-                    decreaseEnemyHealth(10)
                 </Button>
             </HStack>
         </VStack>
