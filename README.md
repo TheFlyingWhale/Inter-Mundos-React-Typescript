@@ -11,5 +11,5 @@ $ npm i
 ## Start game
 
 ```
-$ nmp start
+$ npm start
 ```
