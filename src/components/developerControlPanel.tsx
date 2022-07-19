@@ -143,6 +143,18 @@ const EnemyControls = () => {
                 >
                     removeEnemy
                 </Button>
+                <Button
+                    colorScheme="red"
+                    onClick={() => gameCommands.increaseEnemyHealth(10)}
+                >
+                    increaseEnemyHealth(10)
+                </Button>
+                <Button
+                    colorScheme="red"
+                    onClick={() => gameCommands.decreaseEnemyHealth(10)}
+                >
+                    decreaseEnemyHealth(10)
+                </Button>
             </HStack>
         </VStack>
     );

@@ -1,4 +1,4 @@
-type TileType =
+export type TileType =
     | "plains"
     | "jungle"
     | "forest"
@@ -7,7 +7,6 @@ type TileType =
     | "lake"
     | "river"
     | "base";
-
 export class Tile {
     public name: string = "tile name";
     public index: number = 0;

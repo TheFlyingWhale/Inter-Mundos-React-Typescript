@@ -2,6 +2,7 @@ import { GameStateInterface } from "./GameContext";
 import { World } from "../classes/World";
 import { Player } from "../classes/Player";
 import { Enemy } from "../classes/Enemy";
+import { Tile } from "../classes/Tile";
 
 export enum Action {
     // Game
@@ -11,6 +12,7 @@ export enum Action {
     // World
     SET_WORLD,
     SET_WORLD_NAME,
+    SET_WORLD_MAP,
     //Player
     SET_PLAYER,
     SET_PLAYER_INDEX,
@@ -29,6 +31,8 @@ export enum Action {
     // Enemy
     SET_ENEMY,
     SET_ENEMY_HEALTH,
+    INCREASE_ENEMY_HEALTH,
+    DECREASE_ENEMY_HEALTH,
 }
 
 export type GameAction =
@@ -39,6 +43,7 @@ export type GameAction =
     // World
     | { type: Action.SET_WORLD; world: World }
     | { type: Action.SET_WORLD_NAME; name: string }
+    | { type: Action.SET_WORLD_MAP; map: Tile[] }
     // Player
     | { type: Action.SET_PLAYER; player: Player }
     | { type: Action.SET_PLAYER_INDEX; index: number }
@@ -56,7 +61,9 @@ export type GameAction =
     | { type: Action.GO_BACKWARD }
     // ENEMY
     | { type: Action.SET_ENEMY; enemy: Enemy }
-    | { type: Action.SET_ENEMY_HEALTH; health: number };
+    | { type: Action.SET_ENEMY_HEALTH; health: number }
+    | { type: Action.INCREASE_ENEMY_HEALTH; amount: number }
+    | { type: Action.DECREASE_ENEMY_HEALTH; amount: number };
 
 export const reducer = (state: GameStateInterface, action: GameAction) => {
     switch (action.type) {
@@ -86,6 +93,26 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             return {
                 ...state,
                 world: action.world,
+            };
+        }
+
+        case Action.SET_WORLD_NAME: {
+            return {
+                ...state,
+                world: {
+                    ...state.world,
+                    name: action.name,
+                },
+            };
+        }
+
+        case Action.SET_WORLD_MAP: {
+            return {
+                ...state,
+                world: {
+                    ...state.world,
+                    map: action.map,
+                },
             };
         }
 
@@ -234,6 +261,36 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             return {
                 ...state,
                 enemy: action.enemy,
+            };
+        }
+
+        case Action.SET_ENEMY_HEALTH: {
+            return {
+                ...state,
+                enemy: {
+                    ...state.enemy,
+                    health: action.health,
+                },
+            };
+        }
+
+        case Action.INCREASE_ENEMY_HEALTH: {
+            return {
+                ...state,
+                enemy: {
+                    ...state.enemy,
+                    health: state.enemy.health + action.amount,
+                },
+            };
+        }
+
+        case Action.DECREASE_ENEMY_HEALTH: {
+            return {
+                ...state,
+                enemy: {
+                    ...state.enemy,
+                    health: state.enemy.health - action.amount,
+                },
             };
         }
 

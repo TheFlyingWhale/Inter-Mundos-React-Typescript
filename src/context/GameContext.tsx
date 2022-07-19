@@ -1,8 +1,11 @@
 import React, { ReactNode } from "react";
 import { reducer, Action } from "./GameReducer";
 import { World } from "../classes/World";
+import { Tile } from "../classes/Tile";
 import { Player } from "../classes/Player";
 import { Enemy } from "../classes/Enemy";
+
+import { createRandomWorldMap } from "../services/worldService";
 
 export interface GameStateInterface {
     name: string;
@@ -19,7 +22,7 @@ const initialGameState: GameStateInterface = {
     gameOver: false,
     player: new Player("Player 1"),
     world: new World("Placeholder World", 0),
-    enemy: new Enemy("placeholder"),
+    enemy: new Enemy({ name: "placeholder" }),
 };
 
 interface GameCommands {
@@ -31,6 +34,7 @@ interface GameCommands {
 
     // World
     initializeWorld: () => void;
+    setWorldMap: (map: Tile[]) => void;
 
     // Player
     setPlayer: (player: Player) => void;
@@ -49,6 +53,9 @@ interface GameCommands {
     setEnemy: (enemy: Enemy) => void;
     setEnemyPlaceHolder: () => void;
     generateRandomEnemy: () => void;
+    setEnemyHealth: (health: number) => void;
+    increaseEnemyHealth: (amount: number) => void;
+    decreaseEnemyHealth: (amount: number) => void;
 }
 
 export const GameContextProvider = (props: { children: ReactNode }) => {
@@ -79,9 +86,14 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     const initializeWorld = () => {
-        const newWorld = new World("World Name", 11);
-        newWorld.initialize();
+        const mapSize = 11;
+        const newWorld = new World("World Name", mapSize);
         setWorld(newWorld);
+        setWorldMap(createRandomWorldMap(mapSize));
+    };
+
+    const setWorldMap = (map: Tile[]) => {
+        dispatch({ type: Action.SET_WORLD_MAP, map });
     };
 
     // Player ---------------------------------------------------------------------------------------------------------
@@ -174,14 +186,33 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     const setEnemyPlaceHolder = () => {
-        const enemy = new Enemy("placeholder");
+        const enemy = new Enemy({ name: "placeholder" });
         setEnemy(enemy);
     };
 
     const generateRandomEnemy = () => {
-        const newEnemy = new Enemy("Enemy name");
-        newEnemy.initRandom();
+        const newEnemy = new Enemy({ name: "Enemy name" });
         setEnemy(newEnemy);
+    };
+
+    const setEnemyHealth = (health: number) => {
+        dispatch({ type: Action.SET_ENEMY_HEALTH, health });
+    };
+
+    const increaseEnemyHealth = (amount: number) => {
+        if (gameState.enemy.health + amount > 100) {
+            setEnemyHealth(100);
+        } else {
+            dispatch({ type: Action.INCREASE_ENEMY_HEALTH, amount });
+        }
+    };
+
+    const decreaseEnemyHealth = (amount: number) => {
+        if (gameState.enemy.health - amount <= 0) {
+            setEnemyHealth(0);
+        } else {
+            dispatch({ type: Action.DECREASE_ENEMY_HEALTH, amount });
+        }
     };
 
     const gameCommands = {
@@ -193,6 +224,7 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
 
         // World
         initializeWorld,
+        setWorldMap,
 
         //Player
         setPlayer,
@@ -211,6 +243,9 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         setEnemy,
         setEnemyPlaceHolder,
         generateRandomEnemy,
+        setEnemyHealth,
+        increaseEnemyHealth,
+        decreaseEnemyHealth,
     };
 
     return (
@@ -241,6 +276,7 @@ const Context = React.createContext<GameContextInterface>({
 
         // World
         initializeWorld: () => {},
+        setWorldMap: () => {},
 
         //Player
         setPlayer: () => {},
@@ -259,6 +295,9 @@ const Context = React.createContext<GameContextInterface>({
         setEnemy: () => {},
         setEnemyPlaceHolder: () => {},
         generateRandomEnemy: () => {},
+        setEnemyHealth: () => {},
+        increaseEnemyHealth: () => {},
+        decreaseEnemyHealth: () => {},
     },
 });
 

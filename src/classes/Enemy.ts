@@ -4,20 +4,20 @@ export class Enemy {
     public attackPower: number = 10;
     public critChance: number = 1;
 
-    constructor(name: string) {
+    constructor({
+        name = "Enemy name",
+        health = 100,
+        attackPower = 10,
+        critChance = 1,
+    }: {
+        name: string;
+        health?: number;
+        attackPower?: number;
+        critChance?: number;
+    }) {
         this.name = name;
-    }
-
-    initRandom() {
-        this.setAttackPower(Math.floor(Math.random() * 10));
-        this.setCritChance(Math.floor(Math.random() * 10));
-    }
-
-    setAttackPower(attackPower: number) {
+        this.health = health;
         this.attackPower = attackPower;
-    }
-
-    setCritChance(critChance: number) {
         this.critChance = critChance;
     }
 }

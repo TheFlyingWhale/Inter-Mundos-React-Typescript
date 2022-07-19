@@ -9,18 +9,4 @@ export class World {
         this.name = name;
         this.size = size;
     }
-
-    initialize(): World {
-        for (let i = 0; i < this.size; i++) {
-            const newTile = new Tile(i, "plains");
-            if (i !== 5) {
-                newTile.setRandomType();
-            } else {
-                newTile.setType("base");
-            }
-            this.map.push(newTile);
-        }
-
-        return this;
-    }
 }
