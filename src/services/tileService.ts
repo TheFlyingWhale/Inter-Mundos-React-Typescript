@@ -1,5 +1,4 @@
 import { Tile, TileType } from '../classes/Tile';
-import { createEnemyWithRandomStats } from './enemyService';
 
 const tileTypes: TileType[] = [
 	'plains',
@@ -18,14 +17,16 @@ const getRandomTileType = (): TileType => {
 const createTile = (
 	index: number,
 	tileType: TileType | undefined,
-	withEnemy: boolean = true
+	withEnemy: boolean = true,
+	difficultyLevel: number = 1
 ): Tile => {
 	const chosenTileType = tileType || getRandomTileType();
 	return new Tile({
 		id: index.toString(),
 		index,
 		type: chosenTileType,
-		enemy: withEnemy ? createEnemyWithRandomStats() : undefined,
+		containsEnemy: withEnemy,
+		difficultyLevel: difficultyLevel,
 	});
 };
 

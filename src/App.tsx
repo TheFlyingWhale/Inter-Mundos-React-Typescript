@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Heading, VStack, HStack, Text } from '@chakra-ui/react';
 import { useGameContext } from './context/GameContext';
 import { WorldPanel } from './components/worldPanel';
@@ -6,29 +6,35 @@ import { TilePanel } from './components/tilePanel';
 import { PlayerPanel } from './components/playerPanel';
 import { EnemyPanel } from './components/enemyPanel';
 import { DeveloperControlPanel } from './components/developerControlPanel';
-import { Tile } from './classes/Tile';
 import { Enemy } from './classes/Enemy';
 
 function App() {
 	const { gameState, gameCommands } = useGameContext();
-	const { world, player } = gameState;
+	const { player, enemy, world } = gameState;
 	const { map } = world;
 
-	const doesTileContainEnemy = (tile: Tile) => {
-		return tile !== undefined;
-	};
-
-	useEffect(() => {
+	React.useEffect(() => {
 		const tile = map[player.index];
-		if (doesTileContainEnemy(tile)) {
-			const enemy = tile.enemy;
-			if (enemy) {
-				gameCommands.setEnemy(enemy);
-			} else {
-				gameCommands.setEnemy(new Enemy({ name: 'placeholder' }));
+		if (tile) {
+			if (tile.containsEnemy) {
+				const newEnemy = new Enemy({
+					name: 'Some enemy',
+					health: 100,
+					attackPower: 10,
+					critChance: 10,
+					hitChance: 10,
+					energy: 100,
+					level: 5,
+				});
+				gameCommands.setEnemy(newEnemy);
 			}
 		}
-	}, [gameState.player.index]);
+	}, [player.index]);
+
+	const currentTile = map[player.index];
+	const doesCurrentTileContainEnemy = () => {
+		return currentTile !== undefined && currentTile.containsEnemy;
+	};
 
 	return (
 		<VStack
@@ -60,9 +66,10 @@ function App() {
 				<HStack>
 					<WorldPanel />
 					<PlayerPanel />
-					{gameState.world.map.length && <TilePanel />}
-					{doesTileContainEnemy(map[gameState.player.index]) &&
-						map[gameState.player.index].enemy && <EnemyPanel />}
+					{map.length && <TilePanel />}
+					{enemy.name !== 'placeholder' && doesCurrentTileContainEnemy() && (
+						<EnemyPanel />
+					)}
 				</HStack>
 			</VStack>
 

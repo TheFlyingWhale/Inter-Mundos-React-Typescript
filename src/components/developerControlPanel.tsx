@@ -51,7 +51,7 @@ const GameControls = () => {
 };
 
 const PlayerControls = () => {
-	const { gameCommands, gameState } = useGameContext();
+	const { gameCommands } = useGameContext();
 
 	const handleRest = () => {
 		gameCommands.increasePlayerHealth(50);

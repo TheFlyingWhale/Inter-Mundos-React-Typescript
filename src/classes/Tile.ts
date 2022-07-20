@@ -1,5 +1,3 @@
-import { EnemyType } from './Enemy';
-
 export type TileType =
 	| 'plains'
 	| 'jungle'
@@ -18,25 +16,29 @@ export class Tile {
 	public name: string;
 	public index: number;
 	public type: TileType;
-	public enemy: EnemyType | undefined;
+	public containsEnemy: boolean;
+	public difficultyLevel: number;
 
 	constructor({
 		id,
 		name = 'tile name',
 		index,
 		type = 'plains',
-		enemy = undefined,
+		containsEnemy = false,
+		difficultyLevel = 1,
 	}: {
 		id: string;
 		name?: string;
 		index: number;
 		type?: TileType;
-		enemy?: EnemyType | undefined;
+		containsEnemy?: boolean;
+		difficultyLevel?: number;
 	}) {
 		this.id = id;
 		this.name = name;
 		this.index = index;
 		this.type = type;
-		this.enemy = enemy;
+		this.containsEnemy = containsEnemy;
+		this.difficultyLevel = difficultyLevel;
 	}
 }
