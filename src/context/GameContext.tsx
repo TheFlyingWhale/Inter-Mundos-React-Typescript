@@ -4,7 +4,7 @@ import { Game } from '../classes/Game';
 import { World } from '../classes/World';
 import { Tile } from '../classes/Tile';
 import { Player } from '../classes/Player';
-import { Enemy, Goat } from '../classes/Enemy';
+import { Enemy, EnemyType } from '../classes/Enemy';
 
 import { createRandomWorldMap } from '../services/worldService';
 
@@ -15,7 +15,7 @@ export interface GameStateInterface {
 	game: Game;
 	player: Player;
 	world: World;
-	enemy: Enemy | Goat;
+	enemy: EnemyType;
 }
 
 const initialGameState: GameStateInterface = {
