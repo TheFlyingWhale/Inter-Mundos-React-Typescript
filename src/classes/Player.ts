@@ -1,3 +1,6 @@
+import { ItemTypes } from './Item';
+import { EquipmentTypes } from './Equipment';
+
 export class Player {
 	public name: string = 'Player name';
 	public index: number;
@@ -9,6 +12,8 @@ export class Player {
 	public critChance: number;
 	public hitChance: number;
 
+	public inventory: ItemTypes | EquipmentTypes[];
+
 	constructor({
 		name = 'Player name',
 		index = 5,
@@ -19,6 +24,7 @@ export class Player {
 		attackPower = 10,
 		critChance = 75,
 		hitChance = 90,
+		inventory = [],
 	}: {
 		name: string;
 		index?: number;
@@ -29,6 +35,7 @@ export class Player {
 		attackPower?: number;
 		critChance?: number;
 		hitChance?: number;
+		inventory?: ItemTypes | EquipmentTypes[];
 	}) {
 		this.name = name;
 		this.index = index;
@@ -39,5 +46,6 @@ export class Player {
 		this.attackPower = attackPower;
 		this.critChance = critChance;
 		this.hitChance = hitChance;
+		this.inventory = inventory;
 	}
 }
