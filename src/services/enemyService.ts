@@ -1,4 +1,14 @@
-import { Enemy } from '../classes/Enemy';
+import { Enemy, Goat } from '../classes/Enemy';
+
+const randomEnemyNames = [
+	'Goat',
+	'Demon',
+	'Angel',
+	'Dragon',
+	'Dwarf',
+	'Human',
+	'Troll',
+];
 
 const createEnemy = (): Enemy => {
 	return new Enemy({ name: 'Enemy name' });
@@ -9,7 +19,7 @@ const createEnemyWithRandomStats = (): Enemy => {
 	const critChange = Math.floor(Math.random() * (25 - 10) + 10);
 
 	const newEnemy = new Enemy({
-		name: 'Enemy name',
+		name: randomEnemyNames[Math.floor(Math.random() * randomEnemyNames.length)],
 		attackPower: attackPower,
 		critChance: critChange,
 	});
@@ -17,4 +27,8 @@ const createEnemyWithRandomStats = (): Enemy => {
 	return newEnemy;
 };
 
-export { createEnemy, createEnemyWithRandomStats };
+const createGoat = (): Goat => {
+	return new Goat();
+};
+
+export { createEnemy, createEnemyWithRandomStats, createGoat };

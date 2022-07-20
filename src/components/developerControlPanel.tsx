@@ -1,6 +1,9 @@
 import { Heading, VStack, HStack, Button, Grid } from '@chakra-ui/react';
 import { useGameContext } from '../context/GameContext';
-import { createEnemyWithRandomStats } from '../services/enemyService';
+import {
+	createEnemyWithRandomStats,
+	createGoat,
+} from '../services/enemyService';
 
 export const DeveloperControlPanel = () => {
 	return (
@@ -48,11 +51,19 @@ const GameControls = () => {
 };
 
 const PlayerControls = () => {
-	const { gameCommands } = useGameContext();
+	const { gameCommands, gameState } = useGameContext();
 
 	const handleRest = () => {
 		gameCommands.increasePlayerHealth(50);
 		gameCommands.advanceRound();
+	};
+
+	const handleGoForward = () => {
+		gameCommands.goForward();
+	};
+
+	const handleGoBackward = () => {
+		gameCommands.goBackward();
 	};
 
 	return (
@@ -82,10 +93,10 @@ const PlayerControls = () => {
 				>
 					drink
 				</Button>
-				<Button colorScheme="green" onClick={gameCommands.goBackward}>
+				<Button colorScheme="green" onClick={handleGoBackward}>
 					goBackwards
 				</Button>
-				<Button colorScheme="green" onClick={gameCommands.goForward}>
+				<Button colorScheme="green" onClick={handleGoForward}>
 					goForward
 				</Button>
 			</Grid>
@@ -101,6 +112,11 @@ const EnemyControls = () => {
 		gameCommands.setEnemy(newEnemy);
 	};
 
+	const handleCreateGoat = () => {
+		const newGoat = createGoat();
+		gameCommands.setEnemy(newGoat);
+	};
+
 	return (
 		<VStack p={6} borderRadius={6} bg="orange.100" alignItems="start">
 			<Heading size="md" color="orange.700">
@@ -109,6 +125,9 @@ const EnemyControls = () => {
 			<HStack>
 				<Button colorScheme="orange" onClick={handleCreateRandomEnemy}>
 					createRandomEnemy
+				</Button>
+				<Button colorScheme="orange" onClick={handleCreateGoat}>
+					createGoat
 				</Button>
 				<Button
 					colorScheme="orange"

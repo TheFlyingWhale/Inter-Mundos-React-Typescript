@@ -1,77 +1,92 @@
-import { VStack, Heading, Text } from "@chakra-ui/react";
-import { useGameContext } from "../context/GameContext";
+import { VStack, Heading, Text } from '@chakra-ui/react';
+import { useGameContext } from '../context/GameContext';
 
 export const EnemyPanel = () => {
-    const { gameState } = useGameContext();
+	const { gameState } = useGameContext();
 
-    return (
-        <VStack
-            bg={gameState.enemy.health > 0 ? "gray.700" : "red.700"}
-            p={6}
-            borderRadius={6}
-            alignItems="start"
-        >
-            <Heading size="md">Enemy Information</Heading>
-            <EnemyNameItem />
-            <EnemyHealthItem />
-            <EnemyAttackPowerItem />
-            <EnemyCriticalChanceItem />
-        </VStack>
-    );
+	return (
+		<VStack
+			bg={gameState.enemy.health > 0 ? 'gray.700' : 'red.700'}
+			p={6}
+			borderRadius={6}
+			alignItems="start"
+		>
+			<Heading size="md">Enemy Information</Heading>
+			<EnemyNameItem />
+			<EnemyHealthItem />
+			<EnemyAttackPowerItem />
+			<EnemyCriticalChanceItem />
+			<EnemyHitChanceItem />
+		</VStack>
+	);
 };
 
 const EnemyNameItem = () => {
-    const { gameState } = useGameContext();
+	const { gameState } = useGameContext();
 
-    if (gameState.enemy) {
-        return (
-            <Text>
-                <b>Name:</b> {gameState.enemy.name}{" "}
-            </Text>
-        );
-    }
+	if (gameState.enemy) {
+		return (
+			<Text>
+				<b>Name:</b> {gameState.enemy.name}{' '}
+			</Text>
+		);
+	}
 
-    return <></>;
+	return <></>;
 };
 
 const EnemyHealthItem = () => {
-    const { gameState } = useGameContext();
+	const { gameState } = useGameContext();
 
-    if (gameState.enemy) {
-        return (
-            <Text>
-                <b>Health:</b> {gameState.enemy.health}{" "}
-            </Text>
-        );
-    }
+	if (gameState.enemy) {
+		return (
+			<Text>
+				<b>Health:</b> {gameState.enemy.health}{' '}
+			</Text>
+		);
+	}
 
-    return <></>;
+	return <></>;
 };
 
 const EnemyAttackPowerItem = () => {
-    const { gameState } = useGameContext();
+	const { gameState } = useGameContext();
 
-    if (gameState.enemy) {
-        return (
-            <Text>
-                <b>Attack Power:</b> {gameState.enemy.attackPower}{" "}
-            </Text>
-        );
-    }
+	if (gameState.enemy) {
+		return (
+			<Text>
+				<b>Attack Power:</b> {gameState.enemy.attackPower}{' '}
+			</Text>
+		);
+	}
 
-    return <></>;
+	return <></>;
 };
 
 const EnemyCriticalChanceItem = () => {
-    const { gameState } = useGameContext();
+	const { gameState } = useGameContext();
 
-    if (gameState.enemy) {
-        return (
-            <Text>
-                <b>Critical Chance:</b> {gameState.enemy.critChance}{" "}
-            </Text>
-        );
-    }
+	if (gameState.enemy) {
+		return (
+			<Text>
+				<b>Critical Chance:</b> {gameState.enemy.critChance}{' '}
+			</Text>
+		);
+	}
 
-    return <></>;
+	return <></>;
+};
+
+const EnemyHitChanceItem = () => {
+	const { gameState } = useGameContext();
+
+	if (gameState.enemy) {
+		return (
+			<Text>
+				<b>Hit Chance:</b> {gameState.enemy.hitChance}{' '}
+			</Text>
+		);
+	}
+
+	return <></>;
 };

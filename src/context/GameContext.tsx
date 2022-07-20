@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import { reducer, Action } from './GameReducer';
+import { Game } from '../classes/Game';
 import { World } from '../classes/World';
 import { Tile } from '../classes/Tile';
 import { Player } from '../classes/Player';
-import { Enemy } from '../classes/Enemy';
+import { Enemy, Goat } from '../classes/Enemy';
 
 import { createRandomWorldMap } from '../services/worldService';
 
@@ -11,16 +12,18 @@ export interface GameStateInterface {
 	name: string;
 	round: number;
 	gameOver: boolean;
+	game: Game;
 	player: Player;
 	world: World;
-	enemy: Enemy;
+	enemy: Enemy | Goat;
 }
 
 const initialGameState: GameStateInterface = {
 	name: 'My Game Name',
 	round: 0,
 	gameOver: false,
-	player: new Player('Player 1'),
+	game: new Game({ name: 'Game name' }),
+	player: new Player({ name: 'Player 1' }),
 	world: new World('Placeholder World', 0),
 	enemy: new Enemy({ name: 'placeholder' }),
 };
@@ -77,12 +80,12 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
 	};
 
 	const advanceRound = () => {
-		decreasePlayerHunger(10);
+		decreasePlayerHunger(5);
 		if (gameState.player.hunger === 0) {
 			decreasePlayerHealth(5);
 		}
 
-		decreasePlayerThirst(10);
+		decreasePlayerThirst(5);
 		if (gameState.player.thirst === 0) {
 			decreasePlayerHealth(5);
 		}

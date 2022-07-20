@@ -1,3 +1,4 @@
+import React from 'react';
 import { Heading, VStack, HStack, Text } from '@chakra-ui/react';
 import { useGameContext } from './context/GameContext';
 import { WorldPanel } from './components/worldPanel';
@@ -39,7 +40,7 @@ function App() {
 				<HStack>
 					<WorldPanel />
 					<PlayerPanel />
-					<TilePanel />
+					{gameState.world.map.length && <TilePanel />}
 					{gameState.enemy.name !== 'placeholder' && <EnemyPanel />}
 				</HStack>
 			</VStack>
