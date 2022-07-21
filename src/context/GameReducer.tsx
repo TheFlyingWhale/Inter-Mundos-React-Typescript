@@ -14,19 +14,27 @@ export enum Action {
     SET_WORLD,
     SET_WORLD_NAME,
     SET_WORLD_MAP,
-    //Player
+    // Player
     SET_PLAYER,
     SET_PLAYER_INDEX,
     SET_PLAYER_NAME,
+    // Player - Health
     SET_PLAYER_HEALTH,
     INCREASE_PLAYER_HEALTH,
     DECREASE_PLAYER_HEALTH,
+    // Player - Thirst
     SET_PLAYER_THIRST,
     INCREASE_PLAYER_THIRST,
     DECREASE_PLAYER_THIRST,
+    // Player - Hunger
     SET_PLAYER_HUNGER,
     INCREASE_PLAYER_HUNGER,
     DECREASE_PLAYER_HUNGER,
+    // Player - Energy
+    SET_PLAYER_ENERGY,
+    INCREASE_PLAYER_ENERGY,
+    DECREASE_PLAYER_ENERGY,
+    // Player - Movement
     GO_FORWARD,
     GO_BACKWARD,
     // Enemy
@@ -50,15 +58,22 @@ export type GameAction =
     | { type: Action.SET_PLAYER; player: Player }
     | { type: Action.SET_PLAYER_INDEX; index: number }
     | { type: Action.SET_PLAYER_NAME; name: string }
+    // Player - Health
     | { type: Action.SET_PLAYER_HEALTH; health: number }
     | { type: Action.INCREASE_PLAYER_HEALTH; amount: number }
     | { type: Action.DECREASE_PLAYER_HEALTH; amount: number }
+    // Player - Thirst
     | { type: Action.SET_PLAYER_THIRST; thirst: number }
     | { type: Action.INCREASE_PLAYER_THIRST; amount: number }
     | { type: Action.DECREASE_PLAYER_THIRST; amount: number }
+    // Player - Hunger
     | { type: Action.SET_PLAYER_HUNGER; hunger: number }
     | { type: Action.INCREASE_PLAYER_HUNGER; amount: number }
     | { type: Action.DECREASE_PLAYER_HUNGER; amount: number }
+    // Player - Energy
+    | { type: Action.SET_PLAYER_ENERGY; energy: number }
+    | { type: Action.INCREASE_PLAYER_ENERGY; amount: number }
+    | { type: Action.DECREASE_PLAYER_ENERGY; amount: number }
     | { type: Action.GO_FORWARD }
     | { type: Action.GO_BACKWARD }
     // ENEMY
@@ -151,6 +166,8 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             };
         }
 
+        // Player - Health ---------------------------------------------------------------------------------------------------------
+
         case Action.SET_PLAYER_HEALTH: {
             return {
                 ...state,
@@ -180,6 +197,8 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
                 },
             };
         }
+
+        // Player - Thirst ---------------------------------------------------------------------------------------------------------
 
         case Action.SET_PLAYER_THIRST: {
             return {
@@ -211,6 +230,8 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
             };
         }
 
+        // Player - Hunger ---------------------------------------------------------------------------------------------------------
+
         case Action.SET_PLAYER_HUNGER: {
             return {
                 ...state,
@@ -237,6 +258,38 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
                 player: {
                     ...state.player,
                     hunger: state.player.hunger - action.amount,
+                },
+            };
+        }
+
+        // Player - Energy ---------------------------------------------------------------------------------------------------------
+
+        case Action.SET_PLAYER_ENERGY: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    energy: action.energy,
+                },
+            };
+        }
+
+        case Action.INCREASE_PLAYER_ENERGY: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    energy: state.player.energy + action.amount,
+                },
+            };
+        }
+
+        case Action.DECREASE_PLAYER_ENERGY: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    energy: state.player.energy - action.amount,
                 },
             };
         }

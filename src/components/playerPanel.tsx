@@ -1,137 +1,152 @@
-import { VStack, Heading, Text } from '@chakra-ui/react';
-import { useGameContext } from '../context/GameContext';
+import { VStack, Heading, Text } from "@chakra-ui/react";
+import { useGameContext } from "../context/GameContext";
 
 export const PlayerPanel = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	return (
-		<VStack
-			bg={gameState.player.health > 0 ? 'gray.700' : 'red.700'}
-			p={6}
-			borderRadius={6}
-			alignItems="start"
-		>
-			<Heading size="md">Player Information</Heading>
-			<PlayerNameItem />
-			<PlayerIndexItem />
-			<PlayerHealthItem />
-			<PlayerThirstItem />
-			<PlayerHungerItem />
-			<PlayerAttackPowerItem />
-			<PlayerCriticalChanceItem />
-			<PlayerHitChanceItem />
-		</VStack>
-	);
+    return (
+        <VStack
+            bg={gameState.player.health > 0 ? "gray.700" : "red.700"}
+            p={6}
+            borderRadius={6}
+            alignItems="start"
+        >
+            <Heading size="md">Player Information</Heading>
+            <PlayerNameItem />
+            <PlayerIndexItem />
+            <PlayerHealthItem />
+            <PlayerEnergyItem />
+            <PlayerThirstItem />
+            <PlayerHungerItem />
+            <PlayerAttackPowerItem />
+            <PlayerCriticalChanceItem />
+            <PlayerHitChanceItem />
+        </VStack>
+    );
 };
 
 const PlayerNameItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Name:</b> {gameState.player.name}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Name:</b> {gameState.player.name}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerIndexItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Index:</b> {gameState.player.index}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Index:</b> {gameState.player.index}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerHealthItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Health:</b> {gameState.player.health}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Health:</b> {gameState.player.health}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerThirstItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Thirst:</b> {gameState.player.thirst}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Thirst:</b> {gameState.player.thirst}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerHungerItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Hunger:</b> {gameState.player.hunger}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Hunger:</b> {gameState.player.hunger}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerAttackPowerItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Attack Power:</b> {gameState.player.attackPower}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Attack Power:</b> {gameState.player.attackPower}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerCriticalChanceItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Critical Chance:</b> {gameState.player.critChance}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Critical Chance:</b> {gameState.player.critChance}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
 };
 
 const PlayerHitChanceItem = () => {
-	const { gameState } = useGameContext();
+    const { gameState } = useGameContext();
 
-	if (gameState.player) {
-		return (
-			<Text>
-				<b>Hit Chance:</b> {gameState.player.hitChance}{' '}
-			</Text>
-		);
-	}
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Hit Chance:</b> {gameState.player.hitChance}{" "}
+            </Text>
+        );
+    }
 
-	return <></>;
+    return <></>;
+};
+
+const PlayerEnergyItem = () => {
+    const { gameState } = useGameContext();
+
+    if (gameState.player) {
+        return (
+            <Text>
+                <b>Energy:</b> {gameState.player.energy}{" "}
+            </Text>
+        );
+    }
+
+    return <></>;
 };

@@ -45,13 +45,20 @@ interface GameCommands {
     setPlayer: (player: Player) => void;
     setPlayerIndex: (index: number) => void;
     setPlayerName: (name: string) => void;
+    // Player - Health
     setPlayerHealth: (health: number) => void;
     increasePlayerHealth: (amount: number) => void;
     decreasePlayerHealth: (amount: number) => void;
+    // Player - Thirst
     increasePlayerThirst: (amount: number) => void;
     decreasePlayerThirst: (amount: number) => void;
+    // Player - Hunger
     increasePlayerHunger: (amount: number) => void;
     decreasePlayerHunger: (amount: number) => void;
+    //Energy
+    setPlayerEnergy: (energy: number) => void;
+    increasePlayerEnergy: (amount: number) => void;
+    decreasePlayerEnergy: (amount: number) => void;
     goForward: () => void;
     goBackward: () => void;
 
@@ -131,6 +138,8 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         dispatch({ type: Action.SET_PLAYER_NAME, name });
     };
 
+    // Player - Health
+
     const setPlayerHealth = (health: number) => {
         dispatch({ type: Action.SET_PLAYER_HEALTH, health });
     };
@@ -152,6 +161,8 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         }
     };
 
+    // Player - Thirst
+
     const increasePlayerThirst = (amount: number) => {
         if (gameState.player.thirst + amount > 100) {
             dispatch({ type: Action.SET_PLAYER_THIRST, thirst: 100 });
@@ -168,6 +179,8 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         }
     };
 
+    // Player - Hunger
+
     const increasePlayerHunger = (amount: number) => {
         if (gameState.player.hunger + amount > 100) {
             dispatch({ type: Action.SET_PLAYER_HUNGER, hunger: 100 });
@@ -181,6 +194,28 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
             dispatch({ type: Action.SET_PLAYER_HUNGER, hunger: 0 });
         } else {
             dispatch({ type: Action.DECREASE_PLAYER_HUNGER, amount });
+        }
+    };
+
+    // Player - Energy
+
+    const setPlayerEnergy = (energy: number) => {
+        dispatch({ type: Action.SET_PLAYER_ENERGY, energy });
+    };
+
+    const increasePlayerEnergy = (amount: number) => {
+        if (gameState.player.energy + amount > 100) {
+            dispatch({ type: Action.SET_PLAYER_ENERGY, energy: 100 });
+        } else {
+            dispatch({ type: Action.INCREASE_PLAYER_ENERGY, amount });
+        }
+    };
+
+    const decreasePlayerEnergy = (amount: number) => {
+        if (gameState.player.energy - amount < 0) {
+            dispatch({ type: Action.SET_PLAYER_ENERGY, energy: 0 });
+        } else {
+            dispatch({ type: Action.DECREASE_PLAYER_ENERGY, amount });
         }
     };
 
@@ -246,17 +281,25 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         setWorld,
         setWorldMap,
 
-        //Player
+        // Player
         setPlayer,
         setPlayerIndex,
         setPlayerName,
+        // Player - Health
         setPlayerHealth,
         increasePlayerHealth,
         decreasePlayerHealth,
+        // Player - Thirst
         increasePlayerThirst,
         decreasePlayerThirst,
+        // Player - Hunger
         increasePlayerHunger,
         decreasePlayerHunger,
+        // Player - Energy
+        setPlayerEnergy,
+        increasePlayerEnergy,
+        decreasePlayerEnergy,
+        // Player - Movement
         goForward,
         goBackward,
 
@@ -300,17 +343,24 @@ const Context = React.createContext<GameContextInterface>({
         setWorld: () => {},
         setWorldMap: () => {},
 
-        //Player
+        // Player
         setPlayer: () => {},
         setPlayerIndex: () => {},
         setPlayerName: () => {},
+        // Player - Health
         setPlayerHealth: () => {},
         increasePlayerHealth: () => {},
         decreasePlayerHealth: () => {},
+        // Player - Thirst
         increasePlayerThirst: () => {},
         decreasePlayerThirst: () => {},
+        // Player - Hunger
         increasePlayerHunger: () => {},
         decreasePlayerHunger: () => {},
+        // Player - Energy
+        setPlayerEnergy: () => {},
+        increasePlayerEnergy: () => {},
+        decreasePlayerEnergy: () => {},
         goForward: () => {},
         goBackward: () => {},
 

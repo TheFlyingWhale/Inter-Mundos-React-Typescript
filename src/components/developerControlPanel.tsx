@@ -89,11 +89,11 @@ const GameControls = () => {
 };
 
 const PlayerControls = () => {
-    const { gameState, gameCommands } = useGameContext();
-    const { world } = gameState;
+    const { gameCommands } = useGameContext();
 
     const handleRest = () => {
         gameCommands.increasePlayerHealth(50);
+        gameCommands.setPlayerEnergy(100);
         gameCommands.advanceRound();
     };
 
@@ -218,6 +218,7 @@ const CombatControls = () => {
         console.log("totalPlayerDamage", totalPlayerDamage);
 
         gameCommands.decreaseEnemyHealth(totalPlayerDamage);
+        gameCommands.decreasePlayerEnergy(10);
         gameCommands.decreasePlayerHealth(totalEnemyDamage);
     };
 
