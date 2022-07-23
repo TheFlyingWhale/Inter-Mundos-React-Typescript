@@ -42,7 +42,7 @@ export class Shield extends Equipment {
 
     constructor({
         id,
-        name,
+        name = "Shield",
         strength = 25,
     }: {
         id: string;
