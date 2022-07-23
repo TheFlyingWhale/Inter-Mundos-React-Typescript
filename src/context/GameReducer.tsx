@@ -3,6 +3,7 @@ import { World } from "../classes/World";
 import { Player } from "../classes/Player";
 import { Enemy } from "../classes/Enemy";
 import { Tile } from "../classes/Tile";
+import { ItemTypes } from "../classes/Item";
 
 export enum Action {
     // Game
@@ -10,10 +11,12 @@ export enum Action {
     SET_GAME_OVER,
     SET_GAME_NAME,
     ADVANCE_ROUND,
+
     // World
     SET_WORLD,
     SET_WORLD_NAME,
     SET_WORLD_MAP,
+
     // Player
     SET_PLAYER,
     SET_PLAYER_INDEX,
@@ -34,9 +37,13 @@ export enum Action {
     SET_PLAYER_ENERGY,
     INCREASE_PLAYER_ENERGY,
     DECREASE_PLAYER_ENERGY,
+    // Player - Inventory
+    ADD_ITEM_TO_INVENTORY,
+    REMOVE_ITEM_FROM_INVENTORY,
     // Player - Movement
     GO_FORWARD,
     GO_BACKWARD,
+
     // Enemy
     SET_ENEMY,
     SET_ENEMY_HEALTH,
@@ -50,10 +57,12 @@ export type GameAction =
     | { type: Action.SET_GAME_OVER; gameOver: boolean }
     | { type: Action.SET_GAME_NAME; name: string }
     | { type: Action.ADVANCE_ROUND }
+
     // World
     | { type: Action.SET_WORLD; world: World }
     | { type: Action.SET_WORLD_NAME; name: string }
     | { type: Action.SET_WORLD_MAP; map: Tile[] }
+
     // Player
     | { type: Action.SET_PLAYER; player: Player }
     | { type: Action.SET_PLAYER_INDEX; index: number }
@@ -74,8 +83,13 @@ export type GameAction =
     | { type: Action.SET_PLAYER_ENERGY; energy: number }
     | { type: Action.INCREASE_PLAYER_ENERGY; amount: number }
     | { type: Action.DECREASE_PLAYER_ENERGY; amount: number }
+    // Player - Inventory
+    | { type: Action.ADD_ITEM_TO_INVENTORY; item: ItemTypes }
+    | { type: Action.REMOVE_ITEM_FROM_INVENTORY; id: string }
+    // Player - Movement
     | { type: Action.GO_FORWARD }
     | { type: Action.GO_BACKWARD }
+
     // ENEMY
     | { type: Action.SET_ENEMY; enemy: Enemy }
     | { type: Action.SET_ENEMY_HEALTH; health: number }
@@ -293,6 +307,32 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
                 },
             };
         }
+
+        // Player - Inventory ---------------------------------------------------------------------------------------------------------
+
+        case Action.ADD_ITEM_TO_INVENTORY: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    inventory: [...state.player.inventory, action.item],
+                },
+            };
+        }
+
+        case Action.REMOVE_ITEM_FROM_INVENTORY: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    inventory: state.player.inventory.filter(
+                        (item) => item.id !== action.id
+                    ),
+                },
+            };
+        }
+
+        // Player - Movement ---------------------------------------------------------------------------------------------------------
 
         case Action.GO_FORWARD: {
             return {

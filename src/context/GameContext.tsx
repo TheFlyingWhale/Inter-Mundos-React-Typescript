@@ -5,6 +5,7 @@ import { World } from "../classes/World";
 import { Tile } from "../classes/Tile";
 import { Player } from "../classes/Player";
 import { Enemy, EnemyType } from "../classes/Enemy";
+import { ItemTypes } from "../classes/Item";
 
 import { createRandomWorldMap } from "../services/worldService";
 
@@ -50,15 +51,21 @@ interface GameCommands {
     increasePlayerHealth: (amount: number) => void;
     decreasePlayerHealth: (amount: number) => void;
     // Player - Thirst
+    setPlayerThirst: (thirst: number) => void;
     increasePlayerThirst: (amount: number) => void;
     decreasePlayerThirst: (amount: number) => void;
     // Player - Hunger
+    setPlayerHunger: (hunger: number) => void;
     increasePlayerHunger: (amount: number) => void;
     decreasePlayerHunger: (amount: number) => void;
-    //Energy
+    // Player - Energy
     setPlayerEnergy: (energy: number) => void;
     increasePlayerEnergy: (amount: number) => void;
     decreasePlayerEnergy: (amount: number) => void;
+    // Player - Inventory
+    addItemToInventory: (item: ItemTypes) => void;
+    removeItemFromInventory: (id: string) => void;
+    // Player - Movement
     goForward: () => void;
     goBackward: () => void;
 
@@ -141,7 +148,13 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     // Player - Health
 
     const setPlayerHealth = (health: number) => {
-        dispatch({ type: Action.SET_PLAYER_HEALTH, health });
+        if (health < 0) {
+            dispatch({ type: Action.SET_PLAYER_HEALTH, health: 0 });
+        } else if (health > 100) {
+            dispatch({ type: Action.SET_PLAYER_HEALTH, health: 100 });
+        } else {
+            dispatch({ type: Action.SET_PLAYER_HEALTH, health });
+        }
     };
 
     const increasePlayerHealth = (amount: number) => {
@@ -163,6 +176,16 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
 
     // Player - Thirst
 
+    const setPlayerThirst = (thirst: number) => {
+        if (thirst < 0) {
+            dispatch({ type: Action.SET_PLAYER_THIRST, thirst: 0 });
+        } else if (thirst > 100) {
+            dispatch({ type: Action.SET_PLAYER_THIRST, thirst: 100 });
+        } else {
+            dispatch({ type: Action.SET_PLAYER_THIRST, thirst });
+        }
+    };
+
     const increasePlayerThirst = (amount: number) => {
         if (gameState.player.thirst + amount > 100) {
             dispatch({ type: Action.SET_PLAYER_THIRST, thirst: 100 });
@@ -180,6 +203,16 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     };
 
     // Player - Hunger
+
+    const setPlayerHunger = (hunger: number) => {
+        if (hunger < 0) {
+            dispatch({ type: Action.SET_PLAYER_HUNGER, hunger: 0 });
+        } else if (hunger > 100) {
+            dispatch({ type: Action.SET_PLAYER_HUNGER, hunger: 100 });
+        } else {
+            dispatch({ type: Action.SET_PLAYER_HUNGER, hunger });
+        }
+    };
 
     const increasePlayerHunger = (amount: number) => {
         if (gameState.player.hunger + amount > 100) {
@@ -200,7 +233,13 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
     // Player - Energy
 
     const setPlayerEnergy = (energy: number) => {
-        dispatch({ type: Action.SET_PLAYER_ENERGY, energy });
+        if (energy < 0) {
+            dispatch({ type: Action.SET_PLAYER_ENERGY, energy: 0 });
+        } else if (energy > 100) {
+            dispatch({ type: Action.SET_PLAYER_ENERGY, energy: 100 });
+        } else {
+            dispatch({ type: Action.SET_PLAYER_ENERGY, energy });
+        }
     };
 
     const increasePlayerEnergy = (amount: number) => {
@@ -218,6 +257,18 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
             dispatch({ type: Action.DECREASE_PLAYER_ENERGY, amount });
         }
     };
+
+    // Player - Inventory
+
+    const addItemToInventory = (item: ItemTypes) => {
+        dispatch({ type: Action.ADD_ITEM_TO_INVENTORY, item });
+    };
+
+    const removeItemFromInventory = (id: string) => {
+        dispatch({ type: Action.REMOVE_ITEM_FROM_INVENTORY, id });
+    };
+
+    // Player - Movement
 
     const goForward = () => {
         if (gameState.player.index !== gameState.world.size - 1) {
@@ -290,15 +341,20 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         increasePlayerHealth,
         decreasePlayerHealth,
         // Player - Thirst
+        setPlayerThirst,
         increasePlayerThirst,
         decreasePlayerThirst,
         // Player - Hunger
+        setPlayerHunger,
         increasePlayerHunger,
         decreasePlayerHunger,
         // Player - Energy
         setPlayerEnergy,
         increasePlayerEnergy,
         decreasePlayerEnergy,
+        // Player - Inventory
+        addItemToInventory,
+        removeItemFromInventory,
         // Player - Movement
         goForward,
         goBackward,
@@ -352,15 +408,21 @@ const Context = React.createContext<GameContextInterface>({
         increasePlayerHealth: () => {},
         decreasePlayerHealth: () => {},
         // Player - Thirst
+        setPlayerThirst: () => {},
         increasePlayerThirst: () => {},
         decreasePlayerThirst: () => {},
         // Player - Hunger
+        setPlayerHunger: () => {},
         increasePlayerHunger: () => {},
         decreasePlayerHunger: () => {},
         // Player - Energy
         setPlayerEnergy: () => {},
         increasePlayerEnergy: () => {},
         decreasePlayerEnergy: () => {},
+        // Player - Inventory
+        addItemToInventory: () => {},
+        removeItemFromInventory: () => {},
+        // Player - Movement
         goForward: () => {},
         goBackward: () => {},
 

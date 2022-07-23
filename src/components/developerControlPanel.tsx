@@ -4,15 +4,15 @@ import { useGameContext } from "../context/GameContext";
 import {
     createEnemyWithRandomStats,
     createGoat,
-    createEnemyBasedOnLevel,
 } from "../services/enemyService";
 import { createCampaignMap } from "../services/worldService";
 import { World } from "../classes/World";
 
 import {
-    createItem,
     createHealthPotion,
     createBread,
+    createWaterFlask,
+    createEnergyPotion,
 } from "../services/itemService";
 
 import {
@@ -243,19 +243,26 @@ const CombatControls = () => {
 };
 
 const ItemControls = () => {
-    const handleCreateItem = () => {
-        const newItem = createItem();
-        console.log(newItem);
-    };
+    const { gameCommands } = useGameContext();
 
     const handleCreateHealthPotion = () => {
         const newItem = createHealthPotion();
-        console.log(newItem);
+        gameCommands.addItemToInventory(newItem);
     };
 
     const handleCreateBread = () => {
         const newItem = createBread();
-        console.log(newItem);
+        gameCommands.addItemToInventory(newItem);
+    };
+
+    const handleCreateWater = () => {
+        const newItem = createWaterFlask();
+        gameCommands.addItemToInventory(newItem);
+    };
+
+    const handleCreateEnergyPotion = () => {
+        const newItem = createEnergyPotion();
+        gameCommands.addItemToInventory(newItem);
     };
 
     return (
@@ -264,14 +271,17 @@ const ItemControls = () => {
                 Item Controls
             </Heading>
             <HStack>
-                <Button colorScheme="pink" onClick={handleCreateItem}>
-                    createItem
-                </Button>
                 <Button colorScheme="pink" onClick={handleCreateHealthPotion}>
                     createHealthPotion
                 </Button>
                 <Button colorScheme="pink" onClick={handleCreateBread}>
                     createBread
+                </Button>
+                <Button colorScheme="pink" onClick={handleCreateWater}>
+                    createWaterFlask
+                </Button>
+                <Button colorScheme="pink" onClick={handleCreateEnergyPotion}>
+                    createEnergyPotion
                 </Button>
             </HStack>
         </VStack>

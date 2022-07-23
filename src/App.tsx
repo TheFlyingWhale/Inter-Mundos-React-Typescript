@@ -4,9 +4,9 @@ import { useGameContext } from "./context/GameContext";
 import { WorldPanel } from "./components/worldPanel";
 import { TilePanel } from "./components/tilePanel";
 import { PlayerPanel } from "./components/playerPanel";
+import { InventoryPanel } from "./components/inventoryPanel";
 import { EnemyPanel } from "./components/enemyPanel";
 import { DeveloperControlPanel } from "./components/developerControlPanel";
-import { Enemy } from "./classes/Enemy";
 import { createEnemyBasedOnLevel } from "./services/enemyService";
 
 function App() {
@@ -66,9 +66,10 @@ function App() {
                 borderRadius={12}
                 color="white"
             >
-                <HStack>
+                <HStack alignItems="start">
                     <WorldPanel />
                     <PlayerPanel />
+                    <InventoryPanel />
                     {map.length && <TilePanel />}
                     {enemy.name !== "placeholder" &&
                         doesCurrentTileContainEnemy() && <EnemyPanel />}
