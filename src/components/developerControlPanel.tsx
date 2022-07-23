@@ -287,20 +287,18 @@ const ItemControls = () => {
         </VStack>
     );
 };
+
 const EquipmentControls = () => {
-    const handleCreateEquipment = () => {
-        const newEquipment = createEquipment();
-        console.log(newEquipment);
-    };
+    const { gameCommands } = useGameContext();
 
     const handleCreateSword = () => {
         const newEquipment = createSword();
-        console.log(newEquipment);
+        gameCommands.addItemToInventory(newEquipment);
     };
 
     const handleCreateShield = () => {
         const newEquipment = createShield();
-        console.log(newEquipment);
+        gameCommands.addItemToInventory(newEquipment);
     };
 
     return (
@@ -309,9 +307,6 @@ const EquipmentControls = () => {
                 Equipment Controls
             </Heading>
             <HStack>
-                <Button colorScheme="yellow" onClick={handleCreateEquipment}>
-                    createEquipment
-                </Button>
                 <Button colorScheme="yellow" onClick={handleCreateSword}>
                     createSword
                 </Button>

@@ -8,6 +8,12 @@ import {
     WaterFlask,
     EnergyPotion,
 } from "../classes/Item";
+import {
+    EquipmentTypes,
+    EquipmentTypesWithStrength,
+    Sword,
+    Shield,
+} from "../classes/Equipment";
 
 export const InventoryPanel = () => {
     const { gameState } = useGameContext();
@@ -24,7 +30,7 @@ export const InventoryPanel = () => {
     );
 };
 
-const Item = ({ item }: { item: ItemTypes }) => {
+const Item = ({ item }: { item: ItemTypes | EquipmentTypes }) => {
     const { gameState, gameCommands } = useGameContext();
     const { player } = gameState;
     const {
@@ -62,6 +68,8 @@ const Item = ({ item }: { item: ItemTypes }) => {
         }
     };
 
+    const handleEquipItem = () => {};
+
     if (item instanceof HealthPotion) {
         return <ItemWithStrength handleUseItem={handleUseItem} item={item} />;
     }
@@ -76,6 +84,14 @@ const Item = ({ item }: { item: ItemTypes }) => {
 
     if (item instanceof EnergyPotion) {
         return <ItemWithStrength handleUseItem={handleUseItem} item={item} />;
+    }
+
+    if (item instanceof Sword) {
+        return <Equipment handleEquipItem={handleEquipItem} item={item} />;
+    }
+
+    if (item instanceof Shield) {
+        return <Equipment handleEquipItem={handleEquipItem} item={item} />;
     }
 
     return <></>;
@@ -97,6 +113,30 @@ const ItemWithStrength = ({
             </Text>
             <Button colorScheme="red" onClick={handleUseItem}>
                 Use
+            </Button>
+        </VStack>
+    );
+};
+
+const Equipment = ({
+    handleEquipItem,
+    item,
+}: {
+    handleEquipItem: () => void;
+    item: EquipmentTypesWithStrength;
+}) => {
+    return (
+        <VStack align="start" bg="gray.600" p={3} borderRadius={3}>
+            <Heading size="sm">{item.name}</Heading>
+            <Text>
+                <b>Strength: </b>
+                {item.strength}
+            </Text>
+            <Button colorScheme="green" onClick={handleEquipItem}>
+                Equip
+            </Button>
+            <Button colorScheme="orange" onClick={handleEquipItem}>
+                Unequip
             </Button>
         </VStack>
     );
