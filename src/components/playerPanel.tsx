@@ -21,6 +21,7 @@ export const PlayerPanel = () => {
             <PlayerAttackPowerItem />
             <PlayerCriticalChanceItem />
             <PlayerHitChanceItem />
+            <PlayerEquipmentContainer />
         </VStack>
     );
 };
@@ -145,6 +146,64 @@ const PlayerEnergyItem = () => {
             <Text>
                 <b>Energy:</b> {gameState.player.energy}{" "}
             </Text>
+        );
+    }
+
+    return <></>;
+};
+
+const PlayerEquipmentContainer = () => {
+    const { gameState } = useGameContext();
+
+    if (gameState.player) {
+        return (
+            <VStack alignItems="start">
+                <Heading size="md">Equipment</Heading>
+                <PlayerWeaponItem />
+                <PlayerShieldItem />
+            </VStack>
+        );
+    }
+
+    return <></>;
+};
+
+const PlayerWeaponItem = () => {
+    const { gameState } = useGameContext();
+    const { player } = gameState;
+    const { weapon } = player;
+
+    if (gameState.player) {
+        return (
+            <>
+                <Text>
+                    <b>Weapon:</b> {weapon.name}{" "}
+                </Text>
+                <Text>
+                    <b>Strength:</b> {weapon.strength}{" "}
+                </Text>
+            </>
+        );
+    }
+
+    return <></>;
+};
+
+const PlayerShieldItem = () => {
+    const { gameState } = useGameContext();
+    const { player } = gameState;
+    const { shield } = player;
+
+    if (gameState.player) {
+        return (
+            <>
+                <Text>
+                    <b>Shield:</b> {shield.name}{" "}
+                </Text>
+                <Text>
+                    <b>Strength:</b> {shield.strength}{" "}
+                </Text>
+            </>
         );
     }
 

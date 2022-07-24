@@ -1,5 +1,5 @@
-export type EquipmentTypes = Equipment | Sword | Shield;
-export type EquipmentTypesWithStrength = Sword | Shield;
+export type EquipmentTypes = Equipment | Fist | Sword | Shield;
+export type EquipmentTypesWithStrength = Fist | Sword | Shield;
 
 export class Equipment {
     public id: string;
@@ -14,6 +14,23 @@ export class Equipment {
     }) {
         this.id = id;
         this.name = name;
+    }
+}
+
+export class Fist extends Equipment {
+    public strength: number;
+
+    constructor({
+        id,
+        name = "Fist",
+        strength = 1,
+    }: {
+        id: string;
+        name?: string;
+        strength?: number;
+    }) {
+        super({ id, name });
+        this.strength = strength;
     }
 }
 

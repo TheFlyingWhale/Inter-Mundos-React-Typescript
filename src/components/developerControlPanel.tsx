@@ -15,11 +15,7 @@ import {
     createEnergyPotion,
 } from "../services/itemService";
 
-import {
-    createEquipment,
-    createSword,
-    createShield,
-} from "../services/equipmentService";
+import { createSword, createShield } from "../services/equipmentService";
 
 export const DeveloperControlPanel = () => {
     return (

@@ -11,6 +11,7 @@ import {
 import {
     EquipmentTypes,
     EquipmentTypesWithStrength,
+    Fist,
     Sword,
     Shield,
 } from "../classes/Equipment";
@@ -68,7 +69,29 @@ const Item = ({ item }: { item: ItemTypes | EquipmentTypes }) => {
         }
     };
 
-    const handleEquipItem = () => {};
+    const handleEquipItem = () => {
+        if (item instanceof Fist) {
+            const currentWeapon = player.weapon;
+            gameCommands.addItemToInventory(currentWeapon);
+            const fist = item;
+            gameCommands.removeItemFromInventory(fist.id);
+            gameCommands.setPlayerWeapon(fist);
+        }
+        if (item instanceof Sword) {
+            const currentWeapon = player.weapon;
+            gameCommands.addItemToInventory(currentWeapon);
+            const sword = item;
+            gameCommands.removeItemFromInventory(sword.id);
+            gameCommands.setPlayerWeapon(sword);
+        }
+        if (item instanceof Shield) {
+            const currentShield = player.shield;
+            gameCommands.addItemToInventory(currentShield);
+            const shield = item;
+            gameCommands.removeItemFromInventory(shield.id);
+            gameCommands.setPlayerShield(shield);
+        }
+    };
 
     if (item instanceof HealthPotion) {
         return <ItemWithStrength handleUseItem={handleUseItem} item={item} />;
@@ -84,6 +107,10 @@ const Item = ({ item }: { item: ItemTypes | EquipmentTypes }) => {
 
     if (item instanceof EnergyPotion) {
         return <ItemWithStrength handleUseItem={handleUseItem} item={item} />;
+    }
+
+    if (item instanceof Fist) {
+        return <Equipment handleEquipItem={handleEquipItem} item={item} />;
     }
 
     if (item instanceof Sword) {

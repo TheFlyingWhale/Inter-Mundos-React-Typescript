@@ -6,6 +6,7 @@ import { Tile } from "../classes/Tile";
 import { Player } from "../classes/Player";
 import { Enemy, EnemyType } from "../classes/Enemy";
 import { ItemTypes } from "../classes/Item";
+import { EquipmentTypesWithStrength } from "../classes/Equipment";
 
 import { createRandomWorldMap } from "../services/worldService";
 
@@ -65,6 +66,9 @@ interface GameCommands {
     // Player - Inventory
     addItemToInventory: (item: ItemTypes) => void;
     removeItemFromInventory: (id: string) => void;
+    // Player - Equipment
+    setPlayerWeapon: (weapon: EquipmentTypesWithStrength) => void;
+    setPlayerShield: (shield: EquipmentTypesWithStrength) => void;
     // Player - Movement
     goForward: () => void;
     goBackward: () => void;
@@ -268,6 +272,16 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         dispatch({ type: Action.REMOVE_ITEM_FROM_INVENTORY, id });
     };
 
+    // Player - Equipment
+
+    const setPlayerWeapon = (weapon: EquipmentTypesWithStrength) => {
+        dispatch({ type: Action.SET_PLAYER_WEAPON, weapon });
+    };
+
+    const setPlayerShield = (shield: EquipmentTypesWithStrength) => {
+        dispatch({ type: Action.SET_PLAYER_SHIELD, shield });
+    };
+
     // Player - Movement
 
     const goForward = () => {
@@ -355,6 +369,9 @@ export const GameContextProvider = (props: { children: ReactNode }) => {
         // Player - Inventory
         addItemToInventory,
         removeItemFromInventory,
+        // Player - Equipment
+        setPlayerWeapon,
+        setPlayerShield,
         // Player - Movement
         goForward,
         goBackward,
@@ -422,6 +439,9 @@ const Context = React.createContext<GameContextInterface>({
         // Player - Inventory
         addItemToInventory: () => {},
         removeItemFromInventory: () => {},
+        // Player - Equipment
+        setPlayerWeapon: () => {},
+        setPlayerShield: () => {},
         // Player - Movement
         goForward: () => {},
         goBackward: () => {},

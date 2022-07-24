@@ -1,5 +1,6 @@
 import { ItemTypes } from "./Item";
-import { EquipmentTypes } from "./Equipment";
+import { EquipmentTypes, EquipmentTypesWithStrength } from "./Equipment";
+import { createFist } from "../services/equipmentService";
 
 export class Player {
     public name: string = "Player name";
@@ -11,6 +12,8 @@ export class Player {
     public attackPower: number;
     public critChance: number;
     public hitChance: number;
+    public weapon: EquipmentTypesWithStrength;
+    public shield: EquipmentTypesWithStrength;
 
     public inventory: (ItemTypes | EquipmentTypes)[];
 
@@ -25,6 +28,8 @@ export class Player {
         critChance = 75,
         hitChance = 90,
         inventory = [],
+        weapon = createFist(),
+        shield = createFist(),
     }: {
         name: string;
         index?: number;
@@ -36,6 +41,8 @@ export class Player {
         critChance?: number;
         hitChance?: number;
         inventory?: (ItemTypes | EquipmentTypes)[];
+        weapon?: EquipmentTypesWithStrength;
+        shield?: EquipmentTypesWithStrength;
     }) {
         this.name = name;
         this.index = index;
@@ -47,5 +54,7 @@ export class Player {
         this.critChance = critChance;
         this.hitChance = hitChance;
         this.inventory = inventory;
+        this.weapon = weapon;
+        this.shield = shield;
     }
 }

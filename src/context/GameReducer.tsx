@@ -4,6 +4,7 @@ import { Player } from "../classes/Player";
 import { Enemy } from "../classes/Enemy";
 import { Tile } from "../classes/Tile";
 import { ItemTypes } from "../classes/Item";
+import { EquipmentTypesWithStrength } from "../classes/Equipment";
 
 export enum Action {
     // Game
@@ -40,6 +41,9 @@ export enum Action {
     // Player - Inventory
     ADD_ITEM_TO_INVENTORY,
     REMOVE_ITEM_FROM_INVENTORY,
+    // Player - Equipment
+    SET_PLAYER_WEAPON,
+    SET_PLAYER_SHIELD,
     // Player - Movement
     GO_FORWARD,
     GO_BACKWARD,
@@ -86,6 +90,9 @@ export type GameAction =
     // Player - Inventory
     | { type: Action.ADD_ITEM_TO_INVENTORY; item: ItemTypes }
     | { type: Action.REMOVE_ITEM_FROM_INVENTORY; id: string }
+    // Player - Equipment
+    | { type: Action.SET_PLAYER_WEAPON; weapon: EquipmentTypesWithStrength }
+    | { type: Action.SET_PLAYER_SHIELD; shield: EquipmentTypesWithStrength }
     // Player - Movement
     | { type: Action.GO_FORWARD }
     | { type: Action.GO_BACKWARD }
@@ -328,6 +335,28 @@ export const reducer = (state: GameStateInterface, action: GameAction) => {
                     inventory: state.player.inventory.filter(
                         (item) => item.id !== action.id
                     ),
+                },
+            };
+        }
+
+        // Player - Equipment ---------------------------------------------------------------------------------------------------------
+
+        case Action.SET_PLAYER_WEAPON: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    weapon: action.weapon,
+                },
+            };
+        }
+
+        case Action.SET_PLAYER_SHIELD: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    shield: action.shield,
                 },
             };
         }
