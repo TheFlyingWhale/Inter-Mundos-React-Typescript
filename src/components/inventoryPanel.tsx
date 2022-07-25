@@ -69,25 +69,36 @@ const Item = ({ item }: { item: ItemTypes | EquipmentTypes }) => {
         }
     };
 
+    const addCurrentWeaponToInventory = () => {
+        const currentWeapon = player.weapon;
+        if (!(currentWeapon instanceof Fist)) {
+            gameCommands.addItemToInventory(currentWeapon);
+        }
+    };
+
+    const addCurrentShieldToInventory = () => {
+        const currentShield = player.shield;
+        if (!(currentShield instanceof Fist)) {
+            gameCommands.addItemToInventory(currentShield);
+        }
+    };
+
     // This works great for weapon, but since fists are used as shields too we need to handle them separately
     const handleEquipItem = () => {
         if (item instanceof Fist) {
-            const currentWeapon = player.weapon;
-            gameCommands.addItemToInventory(currentWeapon);
+            addCurrentWeaponToInventory();
             const fist = item;
             gameCommands.removeItemFromInventory(fist.id);
             gameCommands.setPlayerWeapon(fist);
         }
         if (item instanceof Sword) {
-            const currentWeapon = player.weapon;
-            gameCommands.addItemToInventory(currentWeapon);
+            addCurrentWeaponToInventory();
             const sword = item;
             gameCommands.removeItemFromInventory(sword.id);
             gameCommands.setPlayerWeapon(sword);
         }
         if (item instanceof Shield) {
-            const currentShield = player.shield;
-            gameCommands.addItemToInventory(currentShield);
+            addCurrentShieldToInventory();
             const shield = item;
             gameCommands.removeItemFromInventory(shield.id);
             gameCommands.setPlayerShield(shield);

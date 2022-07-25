@@ -15,7 +15,12 @@ import {
     createEnergyPotion,
 } from "../services/itemService";
 
-import { createSword, createShield } from "../services/equipmentService";
+import {
+    createSword,
+    createGodSlayerSword,
+    createShield,
+    createDivineProtectorShield,
+} from "../services/equipmentService";
 
 export const DeveloperControlPanel = () => {
     return (
@@ -286,15 +291,26 @@ const ItemControls = () => {
 
 const EquipmentControls = () => {
     const { gameCommands } = useGameContext();
+    const { addItemToInventory } = gameCommands;
 
     const handleCreateSword = () => {
         const newEquipment = createSword();
-        gameCommands.addItemToInventory(newEquipment);
+        addItemToInventory(newEquipment);
+    };
+
+    const handleCreateGodSlayerSword = () => {
+        const newEquipment = createGodSlayerSword();
+        addItemToInventory(newEquipment);
     };
 
     const handleCreateShield = () => {
         const newEquipment = createShield();
-        gameCommands.addItemToInventory(newEquipment);
+        addItemToInventory(newEquipment);
+    };
+
+    const handleCreateDivineProtectorShield = () => {
+        const newEquipment = createDivineProtectorShield();
+        addItemToInventory(newEquipment);
     };
 
     return (
@@ -306,8 +322,20 @@ const EquipmentControls = () => {
                 <Button colorScheme="yellow" onClick={handleCreateSword}>
                     createSword
                 </Button>
+                <Button
+                    colorScheme="yellow"
+                    onClick={handleCreateGodSlayerSword}
+                >
+                    createGodSlayer
+                </Button>
                 <Button colorScheme="yellow" onClick={handleCreateShield}>
                     createShield
+                </Button>
+                <Button
+                    colorScheme="yellow"
+                    onClick={handleCreateDivineProtectorShield}
+                >
+                    createDivineProtector
                 </Button>
             </HStack>
         </VStack>

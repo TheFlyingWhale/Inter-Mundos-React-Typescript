@@ -1,5 +1,7 @@
-import { VStack, Heading, Text } from "@chakra-ui/react";
+import { VStack, Heading, Text, Button } from "@chakra-ui/react";
 import { useGameContext } from "../context/GameContext";
+import { Fist } from "../classes/Equipment";
+import { createFist } from "../services/equipmentService";
 
 export const PlayerPanel = () => {
     const { gameState } = useGameContext();
@@ -157,7 +159,7 @@ const PlayerEquipmentContainer = () => {
 
     if (gameState.player) {
         return (
-            <VStack alignItems="start">
+            <VStack alignItems="start" bg="gray.600" p={3} borderRadius={3}>
                 <Heading size="md">Equipment</Heading>
                 <PlayerWeaponItem />
                 <PlayerShieldItem />
@@ -169,43 +171,81 @@ const PlayerEquipmentContainer = () => {
 };
 
 const PlayerWeaponItem = () => {
-    const { gameState } = useGameContext();
+    const { gameState, gameCommands } = useGameContext();
     const { player } = gameState;
     const { weapon } = player;
+    const { addItemToInventory, setPlayerWeapon } = gameCommands;
 
-    if (gameState.player) {
+    const handleUnequipWeapon = () => {
+        const currentWeapon = player.weapon;
+        addItemToInventory(currentWeapon);
+        setPlayerWeapon(createFist());
+    };
+
+    if (weapon instanceof Fist) {
         return (
-            <>
+            <VStack align="start" bg="gray.700" p={3} borderRadius={3}>
                 <Text>
                     <b>Weapon:</b> {weapon.name}{" "}
                 </Text>
                 <Text>
                     <b>Strength:</b> {weapon.strength}{" "}
                 </Text>
-            </>
+            </VStack>
         );
     }
 
-    return <></>;
+    return (
+        <VStack align="start" bg="gray.700" p={3} borderRadius={3}>
+            <Text>
+                <b>Weapon:</b> {weapon.name}{" "}
+            </Text>
+            <Text>
+                <b>Strength:</b> {weapon.strength}{" "}
+            </Text>
+            <Button colorScheme="orange" onClick={handleUnequipWeapon}>
+                Unequip
+            </Button>
+        </VStack>
+    );
 };
 
 const PlayerShieldItem = () => {
-    const { gameState } = useGameContext();
+    const { gameState, gameCommands } = useGameContext();
     const { player } = gameState;
     const { shield } = player;
+    const { addItemToInventory, setPlayerShield } = gameCommands;
 
-    if (gameState.player) {
+    const handleUnequipShield = () => {
+        const currentShield = player.shield;
+        addItemToInventory(currentShield);
+        setPlayerShield(createFist());
+    };
+
+    if (shield instanceof Fist) {
         return (
-            <>
+            <VStack align="start" bg="gray.700" p={3} borderRadius={3}>
                 <Text>
                     <b>Shield:</b> {shield.name}{" "}
                 </Text>
                 <Text>
                     <b>Strength:</b> {shield.strength}{" "}
                 </Text>
-            </>
+            </VStack>
         );
     }
 
-    return <></>;
+    return (
+        <VStack align="start" bg="gray.700" p={3} borderRadius={3}>
+            <Text>
+                <b>Shield:</b> {shield.name}{" "}
+            </Text>
+            <Text>
+                <b>Strength:</b> {shield.strength}{" "}
+            </Text>
+            <Button colorScheme="orange" onClick={handleUnequipShield}>
+                Unequip
+            </Button>
+        </VStack>
+    );
 };

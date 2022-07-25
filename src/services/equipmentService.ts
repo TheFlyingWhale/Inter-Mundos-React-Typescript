@@ -24,7 +24,25 @@ export const createSword = (): EquipmentTypesWithStrength => {
     return new Sword({ id: `sword${equipmentId}` });
 };
 
+export const createGodSlayerSword = (): EquipmentTypesWithStrength => {
+    const equipmentId = globalEquipmentId++;
+    return new Sword({
+        id: `sword${equipmentId}`,
+        name: "God Slayer",
+        strength: 100,
+    });
+};
+
 export const createShield = (): EquipmentTypesWithStrength => {
     const equipmentId = globalEquipmentId++;
     return new Shield({ id: `shield${equipmentId}` });
+};
+
+export const createDivineProtectorShield = (): EquipmentTypesWithStrength => {
+    const equipmentId = globalEquipmentId++;
+    return new Shield({
+        id: `shield${equipmentId}`,
+        name: "Divine Protector",
+        strength: 100,
+    });
 };
