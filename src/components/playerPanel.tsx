@@ -229,7 +229,7 @@ const PlayerShieldItem = () => {
                     <b>Shield:</b> {shield.name}{" "}
                 </Text>
                 <Text>
-                    <b>Strength:</b> {shield.strength}{" "}
+                    <b>Defense:</b> {shield.strength}{" "}
                 </Text>
             </VStack>
         );
@@ -241,7 +241,7 @@ const PlayerShieldItem = () => {
                 <b>Shield:</b> {shield.name}{" "}
             </Text>
             <Text>
-                <b>Strength:</b> {shield.strength}{" "}
+                <b>Defense:</b> {shield.strength}{" "}
             </Text>
             <Button colorScheme="orange" onClick={handleUnequipShield}>
                 Unequip

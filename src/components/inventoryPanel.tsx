@@ -164,11 +164,21 @@ const Equipment = ({
     handleEquipItem: () => void;
     item: EquipmentTypesWithStrength;
 }) => {
+    const renderStrengthOrDefense = () => {
+        if (item instanceof Sword) {
+            console.log("item is sword");
+            return <b>Strength: </b>;
+        }
+        if (item instanceof Shield) {
+            return <b>Defense: </b>;
+        }
+    };
+
     return (
         <VStack align="start" bg="gray.600" p={3} borderRadius={3}>
             <Heading size="sm">{item.name}</Heading>
             <Text>
-                <b>Strength: </b>
+                {renderStrengthOrDefense()}
                 {item.strength}
             </Text>
             <Button colorScheme="green" onClick={handleEquipItem}>
