@@ -69,6 +69,7 @@ const Item = ({ item }: { item: ItemTypes | EquipmentTypes }) => {
         }
     };
 
+    // This works great for weapon, but since fists are used as shields too we need to handle them separately
     const handleEquipItem = () => {
         if (item instanceof Fist) {
             const currentWeapon = player.weapon;
@@ -161,9 +162,6 @@ const Equipment = ({
             </Text>
             <Button colorScheme="green" onClick={handleEquipItem}>
                 Equip
-            </Button>
-            <Button colorScheme="orange" onClick={handleEquipItem}>
-                Unequip
             </Button>
         </VStack>
     );
