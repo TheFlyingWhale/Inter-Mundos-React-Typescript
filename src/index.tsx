@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { GameContextProvider } from "./context/GameContext";
 import { BrowserRouter } from "react-router-dom";
 import { Router } from "./Router";

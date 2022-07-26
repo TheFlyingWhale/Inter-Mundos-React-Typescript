@@ -20,13 +20,17 @@ const MainMenu = () => {
             <VStack gap={3}>
                 <Button
                     colorScheme="purple"
-                    onClick={() => navigate("newGame")}
+                    onClick={() => navigate("/newGame")}
+                    size="lg"
+                    w="full"
                 >
                     Start New Game
                 </Button>
                 <Button
                     colorScheme="purple"
                     onClick={() => navigate("devSpace")}
+                    size="lg"
+                    w="full"
                 >
                     Dev Space
                 </Button>
