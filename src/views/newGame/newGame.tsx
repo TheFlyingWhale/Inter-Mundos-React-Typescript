@@ -1,46 +1,19 @@
 import React, { useState } from "react";
 import { VStack, HStack, Heading, Text, Input, Button } from "@chakra-ui/react";
-import { Routes, Route, Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const NewGameRouter = () => {
-    return (
-        <Routes>
-            <Route path="/*" element={<NewGame />}>
-                <Route index element={<PlayerName />} />
-                <Route path="starterItem" element={<StarterItem />} />
-            </Route>
-        </Routes>
-    );
-};
-
-export default NewGameRouter;
-
-const NewGame = () => {
-    return (
-        <VStack
-            maxW="full"
-            height="full"
-            bg="gray.900"
-            justifyContent="center"
-            color="purple.50"
-            gap={12}
-        >
-            <Heading size="4xl">New Game</Heading>
-            <Outlet />
-        </VStack>
-    );
-};
-
-const PlayerName = () => {
+export const PlayerName = () => {
     const [playerName, setPlayerName] = useState("");
+
     const navigate = useNavigate();
 
     return (
-        <VStack gap={3}>
+        <VStack gap={3} minW="250px">
             <VStack align="start" w="full">
                 <Text>Player Name:</Text>
                 <Input
                     bg="gray.800"
+                    placeholder="What should your name be?"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlayerName(e.target.value)
                     }
@@ -59,7 +32,7 @@ const PlayerName = () => {
     );
 };
 
-const StarterItem = () => {
+export const StarterItem = () => {
     return (
         <VStack>
             <Text>Pick your starter gear:</Text>
