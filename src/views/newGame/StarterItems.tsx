@@ -1,4 +1,13 @@
-import { HStack, VStack, Text, Heading, Button } from "@chakra-ui/react";
+import {
+    HStack,
+    VStack,
+    Text,
+    Heading,
+    Button,
+    Grid,
+    GridItem,
+} from "@chakra-ui/react";
+import { useState } from "react";
 import { useGameContext } from "../../context/GameContext";
 
 const StarterItems = () => {
@@ -7,52 +16,64 @@ const StarterItems = () => {
 
     return (
         <VStack>
-            <Text>Pick {player.name}'s starter gear:</Text>
+            <Text>Pick {player.name}s starter gear:</Text>
             <HStack>
-                <VStack
-                    bg="gray.700"
-                    p={6}
-                    borderRadius={6}
-                    h="full"
-                    justifyContent="space-between"
-                >
-                    <Heading size="md">Warrior</Heading>
-                    <VStack align="start" w="full">
-                        <Text>Wooden Sword</Text>
-                        <Text>Wooden Shield</Text>
-                    </VStack>
-                    <Button colorScheme="purple">pick</Button>
-                </VStack>
-                <VStack
-                    bg="gray.700"
-                    p={6}
-                    borderRadius={6}
-                    h="full"
-                    justifyContent="space-between"
-                >
-                    <Heading size="md">Priest</Heading>
-                    <VStack align="start" w="full">
-                        <Text>5 Healing potions</Text>
-                        <Text>5 Energy potions</Text>
-                    </VStack>
-                    <Button colorScheme="purple">pick</Button>
-                </VStack>
-                <VStack
-                    bg="gray.700"
-                    p={6}
-                    borderRadius={6}
-                    h="full"
-                    justifyContent="space-between"
-                >
-                    <Heading size="md">Farmer</Heading>
-                    <VStack align="start" w="full">
-                        <Text>Water</Text>
-                        <Text>Bread</Text>
-                    </VStack>
-                    <Button colorScheme="purple">pick</Button>
-                </VStack>
+                <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+                    <GearCollectionItem
+                        title="Warrior"
+                        items={["Wooden Sword", "Wooden Shield"]}
+                    />
+                    <GearCollectionItem
+                        title="Priest"
+                        items={["5 Healing potions", "5 Energy potions"]}
+                    />
+                    <GearCollectionItem
+                        title="Farmer"
+                        items={["Water", "Bread"]}
+                    />
+                </Grid>
             </HStack>
         </VStack>
+    );
+};
+
+interface GearCollectionProps {
+    title: string;
+    items: string[];
+}
+
+const GearCollectionItem: React.FC<GearCollectionProps> = ({
+    title,
+    items,
+}) => {
+    const [isHovering, setIsHovering] = useState(false);
+
+    return (
+        <GridItem>
+            <VStack
+                bg="gray.700"
+                p={6}
+                borderRadius={6}
+                h="full"
+                justifyContent="space-between"
+                gap={3}
+                outline={isHovering ? "2px solid #553C9A" : "none"}
+            >
+                <Heading size="md">{title}</Heading>
+                <VStack w="full">
+                    {items.map((item) => (
+                        <Text>{item}</Text>
+                    ))}
+                </VStack>
+                <Button
+                    colorScheme="purple"
+                    onMouseEnter={() => setIsHovering(true)}
+                    onMouseLeave={() => setIsHovering(false)}
+                >
+                    pick
+                </Button>
+            </VStack>
+        </GridItem>
     );
 };
 
